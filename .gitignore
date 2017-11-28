@@ -1,4 +1,10 @@
-_drafts
 _site
+_drafts
 .sass-cache
 .jekyll-metadata
+yarn.lock
+node_modules/
+
+*.DS_Store
+.AppleDouble
+.LSOverride
