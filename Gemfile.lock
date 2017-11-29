@@ -239,7 +239,6 @@ DEPENDENCIES
   jekyll-paginate
   jekyll-sitemap
   jemoji
-  minima (~> 2.0)
   rake
 
 BUNDLED WITH
