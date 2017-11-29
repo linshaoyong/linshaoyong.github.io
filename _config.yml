@@ -26,7 +26,6 @@ analytics: # Google Analytics
 markdown: kramdown
 plugins_dir:
   - jekyll-paginate
-  - jekyll-gist
   - jekyll-feed
   - jemoji
   - jekyll-sitemap
