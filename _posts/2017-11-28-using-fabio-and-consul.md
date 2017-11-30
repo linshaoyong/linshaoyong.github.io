@@ -82,11 +82,12 @@ fabio需要配置的项很少，如果要改变默认端口（比如1000），
         route add blabla / http://192.168.0.11:7001/ weight 0.9
 
 手工指定规则会覆盖自动生成的规则，服务状态变更后，手工指定的规则始终有效，要慎用这个功能。我目前只用手工规则来删除路由。
+手工指定路由有两种姿势，一种是在页面设置，另一种是使用consul kv store，设置key为fabio/config的值。
 
 ## 问题
 
 当前版本的fabio（1.5.3）完全从consul获取服务状态来更新路由，但是有时候服务是正常的，可是fabio和服务之间网络异常。
 nginx通过upstream max_fails来处理这个问题，[fabio会在1.7版本加入类似功能](https://github.com/fabiolb/fabio/issues/393)，目前只能通过外挂脚本修改路由。
 写个脚本定时检查fabio和服务的网络是否正常，如果不正常就自定义路由规则，写入consul的kv store。
-fabio自动从consul获取规则更新路由表。
+fabio自动从consul的kv store获取fabio/config的值，并更新路由表。
 
