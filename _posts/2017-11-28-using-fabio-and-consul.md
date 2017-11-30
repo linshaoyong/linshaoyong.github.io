@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "使用fabio和consul构建微服务"
+title: "使用fabio和consul将负载均衡微服务化"
 date: 2017-11-28 14:15:56 +0800
-categories:
+tags: [fabio, consul, 微服务]
 ---
 
 ## 部署
