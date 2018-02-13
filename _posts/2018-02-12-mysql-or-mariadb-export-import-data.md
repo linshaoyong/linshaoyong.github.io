@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MySQL&MariaDB导入导出数据小贴士"
+title: "MySQL&MariaDB数据导入导出小贴士"
 date: 2018-02-12 21:50:50 +0800
 tags: [mysql, mariadb]
 ---
