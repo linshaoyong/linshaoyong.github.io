@@ -25,7 +25,7 @@ disks:
   /dev/sdk: /data10
 ```
 
-然后，创建任务文件，tasks/main.yaml，
+然后，创建任务文件tasks/main.yaml，
 
 ```yaml
 ---
