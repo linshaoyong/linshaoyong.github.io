@@ -29,7 +29,7 @@ disks:
 
 ```yaml
 ---
-
+{% raw %} 
 - file:
     path: "{{ item.value }}/es"
     state: directory
@@ -56,6 +56,7 @@ disks:
     opts: "defaults,noatime,nobarrier"
     state: mounted
   with_dict: "{{ disks }}"
+{% endraw %}
 ```
 
 创建目录、umount、format、mount、写入/etc/fstab，一气呵成。
