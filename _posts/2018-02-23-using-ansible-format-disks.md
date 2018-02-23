@@ -7,7 +7,7 @@ tags: [ansible, format disk]
 
 初始化安装elasticsearch这类集群系统的时候，往往需要批量操作大量的磁盘。可以通过ansible快速完成这类工作。
 
-假设每台设备有10块盘(sdxxx)，要挂载到/dataxxx，Elasticsearch数据目录为/dataxxx/es，首先将变量写入vars/main.yaml，
+假设每台设备有10块盘(sdxxx)，要挂载到/dataxxx，elasticsearch数据目录为/dataxxx/es，首先将变量写入vars/main.yaml，
 
 ```yaml
 ---
