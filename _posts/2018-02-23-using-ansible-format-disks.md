@@ -2,7 +2,7 @@
 layout: post
 title: "使用ansible批量格式化并挂载磁盘"
 date: 2018-02-23 16:15:50 +0800
-tags: [ansible, format disk]
+tags: [ansible, mount, umount, format disk]
 ---
 
 初始化安装elasticsearch这类集群系统的时候，往往需要批量操作大量的磁盘。可以通过ansible快速完成这类工作。
