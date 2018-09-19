@@ -17,6 +17,7 @@ tags: [lenovo, flash]
 ### 步骤
 
 1) 安装驱动，下载MTK_USB_ALL_v1.0.8.zip，解压缩，运行可执行文件。
+
 2) 下载Lenovo_Yoga_Tablet_10_B8000H_MT6589_A422_000_084_140310.zip，解压缩，运行SP Flash Tool v5.1708目录下的flash_tool.exe
 {:refdef: style="text-align: center;"}
 ![My helpful screenshot](/assets/img/lenovo/1.png)
