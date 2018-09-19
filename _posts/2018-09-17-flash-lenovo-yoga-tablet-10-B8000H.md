@@ -18,24 +18,24 @@ tags: [lenovo, flash]
 
 1) 安装驱动，下载MTK_USB_ALL_v1.0.8.zip，解压缩，运行可执行文件。
 
-2) 下载Lenovo_Yoga_Tablet_10_B8000H_MT6589_A422_000_084_140310.zip，解压缩，运行SP Flash Tool v5.1708目录下的flash_tool.exe
+2) 下载Lenovo_Yoga_Tablet_10_B8000H_MT6589_A422_000_084_140310.zip，解压缩，运行SP Flash Tool v5.1708目录下的flash_tool.exe。
 {:refdef: style="text-align: center;"}
 ![My helpful screenshot](/assets/img/lenovo/1.png)
 {: refdef}
 
 3) 进入Download标签页，选择Format All + Download，
    选择Scatter-loading File，其中MT6589_Android_scatter_emmc.txt对应海外版，MT6589_Android_scatter_emmc_CN.txt对应中国版，
-   建议选择中国版，不然预装软件不一样，要从Google Play下载软件还得学会科学上网
+   建议选择中国版，不然预装软件不一样，要从Google Play下载软件还得学会科学上网。
 {:refdef: style="text-align: center;"}
 ![My helpful screenshot](/assets/img/lenovo/2.png)
 {: refdef}
 
-4) 等待处理完毕
+4) 处理中，等待一小会。
 {:refdef: style="text-align: center;"}
 ![My helpful screenshot](/assets/img/lenovo/3.png)
 {: refdef}
 
-5) 出现如下界面后，将平板接入电脑
+5) 出现如下界面后，将平板接入电脑。
 {:refdef: style="text-align: center;"}
 ![My helpful screenshot](/assets/img/lenovo/4.png)
 {: refdef}
