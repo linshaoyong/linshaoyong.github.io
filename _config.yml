@@ -20,7 +20,7 @@ email: linshaoyong@gmail.com
 discus-identifier:  # add your discus identifier
 
 # Tracker
-analytics: # Google Analytics
+analytics: UA-126399136-1
 
 # Build Settings
 markdown: kramdown
