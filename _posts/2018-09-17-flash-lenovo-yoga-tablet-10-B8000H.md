@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "联想Yoga Tablet 10 B8000H线刷教程"
+title: "联想Yoga Tablet 10 B8000H线刷刷机教程"
 date: 2018-09-17 22:50:50 +0800
 tags: [lenovo, flash]
 ---
