@@ -6,12 +6,17 @@ tags: [word frequency english book]
 ---
 
 阅读一本英文书之前，如果能知道词频，并背诵靠前的几十个单词，将能大大提高阅读效率。
+
 让我们先从小王子开始吧。
-<span style="color:blue">注：只包含麦克米伦7000高频词（Macmillan 7000 High Frequency Word），并排除1000个简单词。</span>
+
+<span style="color:red">注：只包含麦克米伦7000高频词（Macmillan 7000 High Frequency Word），并排除1000个简单词。</span>
 
 书名：The Little Prince
+
 作者：Antoine de Saint-Exupery 
+
 Top 100 frequently words:
+
 ```
 prince
 planet
