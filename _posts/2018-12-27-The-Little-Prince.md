@@ -12,6 +12,7 @@ tags: [word frequency english book]
 书名：The Little Prince
 作者：Antoine de Saint-Exupery 
 Top 100 frequently words:
+```
 prince
 planet
 flower
@@ -112,3 +113,4 @@ merchant
 thirsty
 rope
 flush
+```
