@@ -2,7 +2,7 @@
 layout: post
 title: "The Little Prince"
 date: 2018-12-27 11:30:50 +0800
-tags: [word frequency english book]
+tags: [word frequency frequently english book]
 ---
 
 阅读一本英文书之前，如果能知道词频，并背诵靠前的几十个单词，将能大大提高阅读效率。  
