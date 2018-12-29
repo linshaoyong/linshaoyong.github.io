@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Educated: A Memoir"
-date: 2018-12-27 11:30:50 +0800
+date: 2018-12-28 11:30:50 +0800
 tags: [word frequency frequently english book]
 ---
 
