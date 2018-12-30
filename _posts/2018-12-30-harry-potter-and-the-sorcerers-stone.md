@@ -5,7 +5,7 @@ date: 2018-12-30 23:50:50 +0800
 tags: [word frequency frequently english book]
 ---
 
-按词频提取Top 200单词，辅助大家阅读。  
+按词频提取Top 300单词，辅助大家阅读。  
 
 <span style="color:red">注：只包含麦克米伦7000高频词（Macmillan 7000 High Frequency Word），并排除1000个简单词。</span>  
 书名：Harry Potter and the Sorcerer’s Stone
