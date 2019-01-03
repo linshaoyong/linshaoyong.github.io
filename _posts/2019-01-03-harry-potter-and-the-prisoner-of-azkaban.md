@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Harry Potter And The Prisoner of Azkaban"
+title: "Harry Potter and the Prisoner of Azkaban"
 date: 2019-01-03 09:40:00 +0800
 tags: [word frequency frequently english book]
 ---
@@ -8,7 +8,7 @@ tags: [word frequency frequently english book]
 按词频提取Top 300单词，辅助大家阅读。  
 
 <span style="color:red">注：只包含麦克米伦7000高频词（Macmillan 7000 High Frequency Word），并排除1000个简单词。</span>  
-书名：Harry Potter And The Prisoner of Azkaban
+书名：Harry Potter and the Prisoner of Azkaban
 作者：J.K. Rowling  
 Top 300 frequently words:  
 
