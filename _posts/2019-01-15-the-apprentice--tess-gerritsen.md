@@ -8,8 +8,8 @@ tags: [word frequency frequently english book]
 按词频提取Top 300单词，辅助大家阅读。  
 
 <span style="color:red">注：只包含麦克米伦7000高频词（Macmillan 7000 High Frequency Word），并排除1000个简单词。</span>  
-书名：The Apprentice (Rizzoli & Isles #2)
-作者：Tess Gerritsen
+书名：The Apprentice (Rizzoli & Isles #2)  
+作者：Tess Gerritsen  
 Top 300 frequently words:  
 
 ```
