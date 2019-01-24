@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ice Cold (Rizzoli & Isles #8)"
-date: 2019-01-22 09:50:00 +0800
+date: 2019-01-24 09:50:00 +0800
 tags: [word frequency frequently english book]
 ---
 
