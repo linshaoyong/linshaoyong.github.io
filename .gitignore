@@ -5,6 +5,7 @@ _drafts
 yarn.lock
 node_modules/
 
+Gemfile.lock
 *.DS_Store
 .AppleDouble
 .LSOverride
