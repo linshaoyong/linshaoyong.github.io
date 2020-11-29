@@ -33,4 +33,4 @@ pv data.sql.gz | gunzip | mysql dbname
 ```
 
 * pv需要单独安装
-* 在用户目录下使用.my.cnf来使用默认用户密码
+* 可以在用户目录下使用.my.cnf指定用户名、密码
