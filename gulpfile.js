@@ -43,6 +43,19 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
+// COmpile api
+gulp.task('api', function() {
+    return gulp.src('api/*')
+        .pipe(cache(imagemin({
+            interlaced: true,
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        })))
+    .pipe(gulp.dest('_site/api'))
+    .pipe(browserSync.reload({stream:true}));
+});
+
 // Compression images
 gulp.task('img', function() {
 	return gulp.src('assets/img/**/*')
