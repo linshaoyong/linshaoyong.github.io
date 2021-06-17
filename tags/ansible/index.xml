@@ -6,7 +6,21 @@
     <description>Recent content in ansible on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Jun 2021 00:02:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jun 2021 08:02:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible 学习笔记（四）</title>
+      <link>https://linshaoyong.github.io/ansible-4/</link>
+      <pubDate>Thu, 17 Jun 2021 08:02:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/ansible-4/</guid>
+      <description>如果设备少，可以把所有设备写在一个文件，像前面的 host.ini。但是如果设备很多，并且分散在多个节点，那么最好拆分成多个目录文件来管理。
+假设我有开发环境和生产环境，生产环境在北京/厦门各有一个节点，那么 inventory 可以使用下面的目录结构分开，
+inventories ├── dev │ └── host.ini └── prod ├── bj │ └── host.ini └── xm └── host.ini 同时 ansible.cfg 配置下 inventroy 最上层目录，
+inventory = ./inventories/ 这样，如果我要对厦门的设备操作，可以指定厦门的 host.ini
+$ ansible-playbook playbook-xxx.yml -i prod/xm/host.ini inventory 文件也可以跟 playbook 一样，使用 YAML 格式
+--- web: hosts: 192.168.0.100: { app_id: 1 } 192.168.0.101: { app_id: 2 } db: hosts: 192.168.0.110: 192.168.0.111: 192.168.0.112: Inventory variables 在上一篇讲到 role 时提到，可以在 role 的目录下创建一个 defaults 目录，在该目录下设置 role 专属的变量，比如软件版本。</description>
+    </item>
+    
     <item>
       <title>Ansible 学习笔记（三）</title>
       <link>https://linshaoyong.github.io/ansible-3/</link>
