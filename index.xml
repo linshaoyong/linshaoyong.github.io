@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>记事本</title>
+    <link>https://linshaoyong.github.io/</link>
+    <description>Recent content on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 16 Jun 2021 16:50:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible 学习笔记（二）</title>
+      <link>https://linshaoyong.github.io/ansible-2/</link>
+      <pubDate>Wed, 16 Jun 2021 16:50:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/ansible-2/</guid>
+      <description>Ansible playbook 使用 YAML 格式，模版文件使用 jinja2，要完成功能强大的 playbook，需要对这两个格式比较熟悉。
+我们写一个部署 salt-master 的 playbook，一共包含3个文件。
+ saltstack.repo：官方下载的 saltstack yum repo 文件 master.j2： salt-master 配置文件，内容需要依赖变量设置，所以是 jinja2 格式 playbook-salt-master.yml：Ansible playbook 文件  ├── master.j2 ├── playbook-salt-master.yml └── saltstack.repo playbook-salt-master.yml 就是 yaml 格式的 playbook 文件，每个 task 做的事情都不复杂。每一个 name 之后的属性都是 Ansible 提供的模块，用到了 ansible.builtin.rpm_key/copy/yum/file/template/systemd。正是这些功能强大的模块支持，让我们可以完成各种复杂的操作。
+--- - hosts: example become: yes handlers: - name: restart salt-master systemd: name: salt-master state: restarted tasks: - name: Import key from url ansible.builtin.rpm_key: state: present key: https://repo.</description>
+    </item>
+    
+    <item>
+      <title>Ansible 学习笔记（一）</title>
+      <link>https://linshaoyong.github.io/ansible-1/</link>
+      <pubDate>Wed, 16 Jun 2021 09:45:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/ansible-1/</guid>
+      <description>Ansible 发布于 2012 年，当时不同任务需要用不同工具来完成，比如配置管理（Puppet, Chef, cfengine），软件部署（Capistrano, Fabric），命令执行（Func, pssh)）。Ansible 的作者 Michael DeHaan 在配置管理和基础设施维护方面有多年的工作经验，他决定用一种更简单更好的方式来完成这些任务，所以后来就有了 Ansible。
+目前 Ansible 在 Github 上有将近5万个 star，并于2015年10月被 Red Hat 收购，可见这款开源软件是多么的成功。因此掌握 Ansible 可说是一件很有用也比较保值的技能。
+起步 Ansible 是用 Python 写的，可以用 Pip 来安装，也可以用系统的包管理工具安装。
+然后，可以用 Vagrant 在本地启动一个或多个虚拟机，作为被 Ansible 管理的对象。
+我们主要聚焦在 Ansible 的使用上，环境搭建大家根据自己的情况来即可。理论上，最少需要一台安装 ansible 的管理机，一台可以通过 ssh 连接的被管理机。
+假设我有一台被管理机，IP 是 192.168.0.11，SSH 密钥免密码登录已经配好，那么创建一个 hosts.ini 文件
+[example] 192.168.0.11 接下来就可以通过 Ansible 来管理该设备了。
+# 指定 hosts.ini 文件里的 example 设备，使用 ansible 提供的 ping 模块 $ ansible -i hosts.ini example -m ping # 指定 hosts.</description>
+    </item>
+    
+    <item>
+      <title>Binary Search 学习笔记</title>
+      <link>https://linshaoyong.github.io/binary-search/</link>
+      <pubDate>Sat, 22 May 2021 16:00:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/binary-search/</guid>
+      <description>Binary Search 是一个比较常见的算法，理解起来还算简单，但是有时候实现不太容易。教科书上讲到 Binary Search 时，一般用有序数组查找元素为例子。
+def binary_search(array, target): left = 0 right = len(array) - 1 while left &amp;lt;= right: mid = left + (right - left) // 2 if array[mid] == target: return mid elif array[mid] &amp;gt; target: right = mid - 1 else: left = mid + 1 return -1 LeetCode 上有挺多 Binary Search 的题目，其中 Hard 难度也不少，难点往往在于如何判断出可以用 Binary Search 来解决。事实上能用 Binary Search 求解的问题，都是有共性的。
+以猜0到100以内的数为例，
+ 答案在某个范围之内， 0 &amp;lt;= answer &amp;lt;= 100 中间值可能就是答案，如果不是，有一半的范围可以排除。比如 answer &amp;lt; 50，那么 [50, 100] 可以排除掉，答案在 [0, 50) 之间 每次范围折半，直到找到答案  我们以 Leetcode 上一道题目为例，1011.</description>
+    </item>
+    
+    <item>
+      <title>Deno源码解读之deno_core（四）</title>
+      <link>https://linshaoyong.github.io/deno-source-4/</link>
+      <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/deno-source-4/</guid>
+      <description>Deno源码解读之deno_core（四） core/runtime.rs /// Internal state for JsRuntime which is stored in one of v8::Isolate&amp;#39;s /// embedder slots. pub(crate) struct JsRuntimeState { pub global_context: Option&amp;lt;v8::Global&amp;lt;v8::Context&amp;gt;&amp;gt;, pub(crate) op_state: Rc&amp;lt;RefCell&amp;lt;OpState&amp;gt;&amp;gt;, ...... } impl JsRuntime { /// Only constructor, configuration is done through `options`.  pub fn new(mut options: RuntimeOptions) -&amp;gt; Self { ...... isolate.set_slot(Rc::new(RefCell::new(JsRuntimeState { global_context: Some(global_context), op_state: Rc::new(RefCell::new(op_state)), ...... }))); ...... } } JsRuntimeState 的字段较多，我们聚焦在 op_state: Rc&amp;lt;RefCell&amp;gt; 上。创建 JsRuntime 时要同时创建一个 JsRuntimeState 并通过 isolate.</description>
+    </item>
+    
+    <item>
+      <title>Deno源码解读之deno_core（三）</title>
+      <link>https://linshaoyong.github.io/deno-source-3/</link>
+      <pubDate>Fri, 23 Apr 2021 22:12:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/deno-source-3/</guid>
+      <description>Deno源码解读之deno_core（三） 如果我们回顾下 hello world 那个例子，会看到 JsRuntime 提供了一个 register_op 函数，在 Rust 端注册的 op 可以在 JavaScript 调用。
+core/examples/hello_world.rs runtime.register_op( &amp;#34;op_print&amp;#34;, // The op_fn callback takes a state object OpState,  // a structured arg of type `T` and an optional ZeroCopyBuf,  // a mutable reference to a JavaScript ArrayBuffer  op_sync(|_state, msg: Option&amp;lt;String&amp;gt;, zero_copy| { let mut out = std::io::stdout(); // Write msg to stdout  if let Some(msg) = msg { out.</description>
+    </item>
+    
+    <item>
+      <title>Deno源码解读之deno_core（二）</title>
+      <link>https://linshaoyong.github.io/deno-source-2/</link>
+      <pubDate>Thu, 22 Apr 2021 22:12:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/deno-source-2/</guid>
+      <description>Deno源码解读之deno_core（二） 从 hello word 的例子中可以看到，deno_core 为我们封装了 JsRuntime ，理解 JsRuntime 背后原理，就基本上掌握了 deno_core。
+core/runtime.rs /// A single execution context of JavaScript. Corresponds roughly to the &amp;#34;Web /// Worker&amp;#34; concept in the DOM. A JsRuntime is a Future that can be used with /// an event loop (Tokio, async_std). pub struct JsRuntime { // This is an Option&amp;lt;OwnedIsolate&amp;gt; instead of just OwnedIsolate to workaround  // an safety issue with SnapshotCreator. See JsRuntime::drop.  v8_isolate: Option&amp;lt;v8::OwnedIsolate&amp;gt;, snapshot_creator: Option&amp;lt;v8::SnapshotCreator&amp;gt;, has_snapshotted: bool, allocations: IsolateAllocations, } /// Objects that need to live as long as the isolate #[derive(Default)] struct IsolateAllocations { near_heap_limit_callback_data: Option&amp;lt;(Box&amp;lt;RefCell&amp;lt;dyn Any&amp;gt;&amp;gt;, v8::NearHeapLimitCallback)&amp;gt;, } JsRuntime 主要包含两个字段，v8::OwnedIsolate 和 IsolateAllocations。v8::OwnedIsolate 来自rusty_v8，相当于 V8 isolate 实例，IsolateAllocations 保存生命周期不短于 isolate 的各种对象。</description>
+    </item>
+    
+    <item>
+      <title>Deno源码解读之deno_core（一）</title>
+      <link>https://linshaoyong.github.io/deno-source-1/</link>
+      <pubDate>Wed, 21 Apr 2021 22:12:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/deno-source-1/</guid>
+      <description>首先，下载源代码
+git clone git@github.com:denoland/deno.git 然后，进入 deno 目录，看下主要的目录结构
+. ├── core ├── runtime ├── op_crates ├── cli ├── serde_v8 ├── test_plugin ├── test_util ├── third_party ├── tools ├── Cargo.lock └── Cargo.toml 主要目录共4个，cli/core/runtime/op_crates，最底层的是 core 目录，我们可以先集中研究该目录下的代码。core 目录包含 Cargo.toml 文件，是一个名为 deno_core 的 Crate。
+[package] name = &amp;#34;deno_core&amp;#34; version = &amp;#34;0.83.0&amp;#34; edition = &amp;#34;2018&amp;#34; description = &amp;#34;A secure JavaScript/TypeScript runtime built with V8, Rust, and Tokio&amp;#34; authors = [&amp;#34;the Deno authors&amp;#34;] license = &amp;#34;MIT&amp;#34; readme = &amp;#34;README.</description>
+    </item>
+    
+    <item>
+      <title>Event loop 介绍（二）</title>
+      <link>https://linshaoyong.github.io/event-loop-02/</link>
+      <pubDate>Wed, 10 Mar 2021 22:12:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/event-loop-02/</guid>
+      <description>event loop通常联合Reactor设计模式一起使用。在Node.js中每个异步IO操作都对应一个handler（也叫回调函数/callback）。当IO操作触发事件，相应的回调函数进入执行队列，event loop从队列中取出callback执行。event loop是单线程的，所以callback要尽量轻量。
+Node.js Node.js进程启动后，先初始化event loop，再执行JavaScript文件，之后通过event loop循环执行异步操作的callbacks。在Node.js里，event loop分为多个阶段（phase），如下图所示
+每个phase都有一个队列，存放该phase需要执行的callbacks。每个phase的说明可以参考Node.js官方文档，解释得比较详细了。
+libuv libuv is a multi-platform support library with a focus on asynchronous I/O. It was primarily developed for use by Node.js, but it’s also used by Luvit, Julia, pyuv, and others.
+实际上，Node.js的event loop依赖libuv实现，可以通过libuv了解更底层的实现。
+event loop可以说是libuv的核心部分，在libuv也可以看到跟Node.js一样的phase
+从libuv的代码，可以看到event loop的执行流程。
+int uv_run(uv_loop_t* loop, uv_run_mode mode) { int timeout; int r; int ran_pending; r = uv__loop_alive(loop); if (!r) uv__update_time(loop); while (r != 0 &amp;amp;&amp;amp; loop-&amp;gt;stop_flag == 0) { uv__update_time(loop); uv__run_timers(loop); ran_pending = uv__run_pending(loop); uv__run_idle(loop); uv__run_prepare(loop); timeout = 0; if ((mode == UV_RUN_ONCE &amp;amp;&amp;amp; !</description>
+    </item>
+    
+    <item>
+      <title>Event loop 介绍（一）</title>
+      <link>https://linshaoyong.github.io/event-loop-01/</link>
+      <pubDate>Tue, 09 Mar 2021 21:15:56 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/event-loop-01/</guid>
+      <description>Event loop Event loop是异步编程的基础，Node.js通过Event loop实现了高性能非阻塞IO操作。了解Event loop，有助于了解程序背后的运行机制。本系列文章是我的学习总结，期间参考了一些很棒的资料，强烈推荐阅读。
+参考资料  What the heck is the event loop anyway? Event Loop and the Big Picture — NodeJS Event Loop Node.js Design Patterns event-loop-timers-and-nexttick  准备工具 Node.js Node.js® is a JavaScript runtime built on Chrome&amp;rsquo;s V8 JavaScript engine.
+为了方便使用多版本Node.js，可以用 nvm安装node。
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install node V8 V8 is Google’s open source high-performance JavaScript and WebAssembly engine, written in C++. It is used in Chrome and in Node.</description>
+    </item>
+    
+    <item>
+      <title>MySQL&amp;MariaDB数据导入导出小贴士</title>
+      <link>https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/</link>
+      <pubDate>Mon, 12 Feb 2018 21:50:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/</guid>
+      <description>有时候需要用mysqldump来导数据，记录下省得查文档。
+导出数据到sql文件 mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;quot;t&amp;gt;a and t&amp;lt;b&amp;quot; &amp;gt; data.sql 导出数据到压缩文件 mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;quot;t&amp;gt;a and t&amp;lt;b&amp;quot; | gzip &amp;gt; data.sql.gz 后台运行导出数据 nohup sh -c &#39;mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;quot;t&amp;gt;a and t&amp;lt;b&amp;quot; | gzip &amp;gt; data.sql.gz&#39; &amp;amp; 后台运行导入数据 nohup sh -c &#39;gunzip &amp;lt; data.sql.gz | mysql dbname&#39; &amp;amp; 导入数据时显示进度： pv data.sql.gz | gunzip | mysql dbname  pv需要单独安装 可以在用户目录下使用.my.cnf指定用户名、密码  </description>
+    </item>
+    
+    <item>
+      <title>使用fabio和consul将负载均衡微服务化</title>
+      <link>https://linshaoyong.github.io/using-fabio-and-consul/</link>
+      <pubDate>Tue, 28 Nov 2017 14:15:56 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/using-fabio-and-consul/</guid>
+      <description>部署 fabio是一款简单、快速、几乎零配置的负载均衡软件，后端集成了consul等多种服务发现软件。
+假设我们有一个web应用，部署在3台设备，对外提供HTTP查询接口，一般是在前面用nginx做负载均衡。
++--&amp;gt; service-a （192.168.0.11:10001） | user --&amp;gt; nginx （192.168.0.10:10000） --+--&amp;gt; service-b （192.168.0.12:10001） | +--&amp;gt; service-c （192.168.0.13:10001） 但是nginx对后端不够敏感，如果某台设备数据库变慢了、数据库的数据延迟等等，nginx依然会转发请求过去。 如果要做到质量高度敏感，不稳定的服务及时停止，就需要借助consul这类服务注册、服务发现和健康检测的工具。 当然，nginx功能很强大，要保留nginx的功能，可以在每个服务前端都部署nginx，再把fabio放在nginx之前。
++--&amp;gt; nginx （192.168.0.11:10001） --&amp;gt; service-a | user --&amp;gt; fabio （192.168.0.10:10000） --+--&amp;gt; nginx （192.168.0.12:10001） --&amp;gt; service-b | +--&amp;gt; nginx （192.168.0.13:10001） --&amp;gt; service-c fabio配置 fabio需要配置的项很少，如果要改变默认端口（比如1000），
+$ ./fabio -proxy.addr=&amp;#39;:10000&amp;#39; 也可以使用配置文件，创建fabio.properties，自定义一些配置项，比如端口、日志级别，
+proxy.addr = :10000 log.access.target = stdout log.level = TRACE 运行时指定配置文件，
+$ ./fabio -cfg fabio.properties consul配置 在consul配置我们提供的服务，并提供健康检测脚本，
+{ &amp;#34;service&amp;#34;: { &amp;#34;id&amp;#34;: &amp;#34;blabla-host-a&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;blabla&amp;#34;, &amp;#34;port&amp;#34;: 10001, &amp;#34;tags&amp;#34;:[&amp;#34;urlprefix-/&amp;#34;], &amp;#34;checks&amp;#34;:[ { &amp;#34;script&amp;#34;: &amp;#34;/usr/local/blabla/check.</description>
+    </item>
+    
+  </channel>
+</rss>

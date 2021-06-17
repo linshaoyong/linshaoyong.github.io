@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.83.1" />
+  <title> Binary Search 学习笔记 | 记事本 </title>
+  <link rel="stylesheet" href="https://linshaoyong.github.iocss/simpleness.css">
+  <link rel="canonical" href="https://linshaoyong.github.io/binary-search/">
+  <link rel="alternate" type="application/rss+xml" href="" title="记事本">
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-126399136-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body class="container">
+  <nav class="navigation">
+  <div class="nav-left">
+    
+    <a href="https://linshaoyong.github.io">记事本</a>
+    
+    <div class="nav-item nav-title">
+      <a href="https://linshaoyong.github.io"> 记事本</a>
+    </div>
+    <div class="nav-item nav-menu">
+      
+    </div>
+  </div>
+  <div class="nav-item nav-right fontawesome">
+    
+    
+    <a href="https://github.com/linshaoyong" target="_blank">
+      <i title="GitHub" class="fab fa-github"></i>
+    </a>
+    
+    
+    <a href="https://linshaoyong.github.io/index.xml" target="_blank">
+      <i title="RSS" class="fas fa-rss"></i>
+    </a>
+    
+  </div>
+</nav>
+
+  
+<article class="post">
+  <header class="post-header">
+    <h1 style="text-align: center;" >Binary Search 学习笔记</h1>
+    <div class="post-metadata">
+    
+      <time datetime="2021-05-22T16:00:50Z">May 22, 2021</time> &nbsp; 
+    
+    
+    
+    
+    
+      <i class="far fa-clock"></i>
+      
+      
+      
+      
+        5 min
+      
+      48 s
+      &nbsp;
+    
+    
+    </div>
+  </header>
+
+  
+
+  <div class="post-text">
+    <p>Binary Search 是一个比较常见的算法，理解起来还算简单，但是有时候实现不太容易。教科书上讲到 Binary Search 时，一般用有序数组查找元素为例子。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">binary_search</span>(array, target):
+    left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    right <span style="color:#f92672">=</span> len(array) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">while</span> left <span style="color:#f92672">&lt;=</span> right:
+        mid <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> (right <span style="color:#f92672">-</span> left) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+        <span style="color:#66d9ef">if</span> array[mid] <span style="color:#f92672">==</span> target:
+            <span style="color:#66d9ef">return</span> mid
+        <span style="color:#66d9ef">elif</span> array[mid] <span style="color:#f92672">&gt;</span> target:
+            right <span style="color:#f92672">=</span> mid <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">else</span>:
+            left <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</code></pre></div><p>LeetCode 上有挺多 Binary Search 的题目，其中 Hard 难度也不少，难点往往在于如何判断出可以用 Binary Search 来解决。事实上能用 Binary Search 求解的问题，都是有共性的。</p>
+<p>以猜0到100以内的数为例，</p>
+<ul>
+<li>答案在某个范围之内， 0 &lt;= answer &lt;= 100</li>
+<li>中间值可能就是答案，如果不是，有一半的范围可以排除。比如 answer &lt; 50，那么 [50, 100] 可以排除掉，答案在 [0, 50) 之间</li>
+<li>每次范围折半，直到找到答案</li>
+</ul>
+<p>我们以 Leetcode 上一道题目为例，<a href="https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/">1011. Capacity To Ship Packages Within D Days</a></p>
+<blockquote>
+<p>A conveyor belt has packages that must be shipped from one port to another within <code>days</code> days.</p>
+<p>The <code>ith</code> package on the conveyor belt has a weight of <code>weights[i]</code>. Each day, we load the ship with packages on the conveyor belt (in the order given by <code>weights</code>). We may not load more weight than the maximum weight capacity of the ship.</p>
+<p>Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within <code>days</code> days.</p>
+</blockquote>
+<p>有一组货物 weights 按顺序运输，要在 days 天内完成，问船的最小容量是多少才能完成任务。</p>
+<ul>
+<li>首先容量至少要等于 weights 的最大值，不然货物无法装上船。其次，容量最大为所有 weights 总和，就可以 1 次完成运输。 max(weights) &lt;= answer &lt;= sum(weights)</li>
+<li>取中间值，如果该值满足需求，那么比该值大的数都可以完成运输任务。由于要取最小值，那么右半部分可以排除。相反，就排除左半部分</li>
+<li>每次范围折半，直到找到答案</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Solution</span>;
+
+<span style="color:#66d9ef">impl</span> Solution {
+    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">ship_within_days</span>(weights: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>, days: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">i32</span> {
+        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> low <span style="color:#f92672">=</span> weights.iter().max().unwrap().clone();
+        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> high: <span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> weights.iter().sum();
+
+        <span style="color:#66d9ef">while</span> low <span style="color:#f92672">&lt;</span> high {
+            <span style="color:#66d9ef">let</span> mid <span style="color:#f92672">=</span> (low <span style="color:#f92672">+</span> high) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+            <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> cap <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> need_days <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+
+            <span style="color:#75715e">// 当容量为mid，计算出所需天数 need_days
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">for</span> weight <span style="color:#66d9ef">in</span> weights.iter() {
+                <span style="color:#66d9ef">if</span> (cap <span style="color:#f92672">+</span> weight) <span style="color:#f92672">&gt;</span> mid {
+                    cap <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+                    need_days <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+                }
+                cap <span style="color:#f92672">+=</span> weight;
+            }
+
+            <span style="color:#75715e">// 如果所需天数超出，说明mid不够大
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> need_days <span style="color:#f92672">&gt;</span> days {
+                low <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#75715e">// 否则，说明mid太大
+</span><span style="color:#75715e"></span>                high <span style="color:#f92672">=</span> mid;
+            }
+        }
+        low
+    }
+}
+
+<span style="color:#75715e">#[test]</span>
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">test_ship_within_days</span>() {
+    assert_eq<span style="color:#f92672">!</span>(
+        <span style="color:#ae81ff">15</span>,
+        Solution::ship_within_days(vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>], <span style="color:#ae81ff">5</span>)
+    );
+    assert_eq<span style="color:#f92672">!</span>(<span style="color:#ae81ff">6</span>, Solution::ship_within_days(vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">3</span>));
+    assert_eq<span style="color:#f92672">!</span>(<span style="color:#ae81ff">3</span>, Solution::ship_within_days(vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">4</span>));
+}
+</code></pre></div><p>再看一题，<a href="https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/">1760. Minimum Limit of Balls in a Bag</a></p>
+<blockquote>
+<p>You are given an integer array <code>nums</code> where the <code>ith</code> bag contains <code>nums[i]</code> balls. You are also given an integer <code>maxOperations</code>.</p>
+<p>You can perform the following operation at most <code>maxOperations</code> times:</p>
+<ul>
+<li>Take any bag of balls and divide it into two new bags with a positive number of balls.
+<ul>
+<li>For example, a bag of <code>5</code> balls can become two new bags of <code>1</code> and <code>4</code> balls, or two new bags of <code>2</code> and <code>3</code> balls.</li>
+</ul>
+</li>
+</ul>
+<p>Your penalty is the <strong>maximum</strong> number of balls in a bag. You want to <strong>minimize</strong> your penalty after the operations.</p>
+<p>Return <em>the minimum possible penalty after performing the operations</em>.</p>
+</blockquote>
+<p>用一个数组 nums 表示 len(nums) 袋球，nums[i] 代表第 ith 袋球的数量。每次操作可以把某袋球分成两袋，目标是最小化袋子的最大球数，问 maxOperations 次操作后，这个最小值是多少。</p>
+<ul>
+<li>如果可以无限次操作，那么最终每个袋子都只有1个球，1是可能的最小值。如果不操作，那么初始的最大袋子的球数，就是可能的最大值。1 &lt;= answer &lt;= max(nums)</li>
+<li>取中间值，如果 maxOperations 次操作以内，可以得到该结果，说明还可能再减小结果值，那么右半部分可以排除。相反，就排除左半部分</li>
+<li>每次范围折半，直到找到答案</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Solution</span>;
+
+<span style="color:#66d9ef">impl</span> Solution {
+    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">minimum_size</span>(nums: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>, max_operations: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">i32</span> {
+        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> left <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> right <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>nums.iter().max().unwrap();
+        <span style="color:#66d9ef">while</span> left <span style="color:#f92672">&lt;</span> right {
+            <span style="color:#66d9ef">let</span> mid <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> (right <span style="color:#f92672">-</span> left) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+            <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> operations <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+            <span style="color:#75715e">// 计算出要多少次operations才能得到mid
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">for</span> num <span style="color:#66d9ef">in</span> <span style="color:#f92672">&amp;</span>nums {
+                operations <span style="color:#f92672">+=</span> (num <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> mid;
+            }
+            <span style="color:#75715e">// 如果operations超过允许的最大次数，说明mid太小，无法把所有袋子都分到那么小袋
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> operations <span style="color:#f92672">&gt;</span> max_operations {
+                left <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+            } <span style="color:#66d9ef">else</span> {
+                right <span style="color:#f92672">=</span> mid;
+            }
+        }
+        left
+    }
+}
+
+<span style="color:#75715e">#[test]</span>
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">test_minimum_size</span>() {
+    assert_eq<span style="color:#f92672">!</span>(<span style="color:#ae81ff">3</span>, Solution::minimum_size(vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">2</span>));
+    assert_eq<span style="color:#f92672">!</span>(<span style="color:#ae81ff">2</span>, Solution::minimum_size(vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">4</span>));
+    assert_eq<span style="color:#f92672">!</span>(<span style="color:#ae81ff">7</span>, Solution::minimum_size(vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">17</span>], <span style="color:#ae81ff">2</span>));
+}
+</code></pre></div><p>LeetCode 讨论区有一篇非常好的文章，分析了 Binary Search 的解法模版，我也是在这篇文章的启发下，完成了一些题目。强烈建议阅读，<a href="https://leetcode.com/discuss/study-guide/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems">Powerful Ultimate Binary Search Template. Solved many problems</a>。</p>
+
+  </div>
+
+  <footer class="post-footer">
+    
+
+    
+    <div class="post-tags">
+      <i class="fas fa-tags"></i>
+      
+        <a href="/tags/binary-search">binary search</a>
+        &nbsp;
+      
+        <a href="/tags/leetcode">leetcode</a>
+        &nbsp;
+      
+        <a href="/tags/algorithm">algorithm</a>
+        &nbsp;
+      
+    </div>
+    
+
+    
+    
+  </footer>
+  
+  <div class="comments">
+  <div class="comments">
+
+
+
+</div>
+  </div>
+</article>
+
+  <div class="foot">
+  
+  &copy; 2017 - 2021 &#183;
+  <a href="/"> 记事本 </a> &#183;
+  Theme <a href="https://github.com/RainerChiang/simpleness">Simpleness</a> Powered by <a href="https://gohugo.io/">Hugo</a> &#183;
+  <a href="#"><i class="fas fa-chevron-up"></i></a>
+</div>
+</body>
+  <script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({container: document.getElementById('article')});
+</script>
+
+
+
+
+</html>

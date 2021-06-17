@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.83.1" />
+  <title> Deno源码解读之deno_core（三） | 记事本 </title>
+  <link rel="stylesheet" href="https://linshaoyong.github.iocss/simpleness.css">
+  <link rel="canonical" href="https://linshaoyong.github.io/deno-source-3/">
+  <link rel="alternate" type="application/rss+xml" href="" title="记事本">
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-126399136-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body class="container">
+  <nav class="navigation">
+  <div class="nav-left">
+    
+    <a href="https://linshaoyong.github.io">记事本</a>
+    
+    <div class="nav-item nav-title">
+      <a href="https://linshaoyong.github.io"> 记事本</a>
+    </div>
+    <div class="nav-item nav-menu">
+      
+    </div>
+  </div>
+  <div class="nav-item nav-right fontawesome">
+    
+    
+    <a href="https://github.com/linshaoyong" target="_blank">
+      <i title="GitHub" class="fab fa-github"></i>
+    </a>
+    
+    
+    <a href="https://linshaoyong.github.io/index.xml" target="_blank">
+      <i title="RSS" class="fas fa-rss"></i>
+    </a>
+    
+  </div>
+</nav>
+
+  
+<article class="post">
+  <header class="post-header">
+    <h1 style="text-align: center;" >Deno源码解读之deno_core（三）</h1>
+    <div class="post-metadata">
+    
+      <time datetime="2021-04-23T22:12:50Z">April 23, 2021</time> &nbsp; 
+    
+    
+    
+    
+    
+      <i class="far fa-clock"></i>
+      
+      
+      
+      
+        4 min
+      
+      43 s
+      &nbsp;
+    
+    
+    </div>
+  </header>
+
+  
+
+  <div class="post-text">
+    <h2 id="deno源码解读之deno_core三">Deno源码解读之deno_core（三）</h2>
+<p>如果我们回顾下 hello world 那个例子，会看到 JsRuntime 提供了一个 register_op 函数，在 Rust 端注册的 op 可以在 JavaScript 调用。</p>
+<h3 id="coreexampleshello_worldrs">core/examples/hello_world.rs</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">runtime.register_op(
+  <span style="color:#e6db74">&#34;op_print&#34;</span>,
+  <span style="color:#75715e">// The op_fn callback takes a state object OpState,
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// a structured arg of type `T` and an optional ZeroCopyBuf,
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// a mutable reference to a JavaScript ArrayBuffer
+</span><span style="color:#75715e"></span>  op_sync(<span style="color:#f92672">|</span>_state, msg: Option<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span>, zero_copy<span style="color:#f92672">|</span> {
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> out <span style="color:#f92672">=</span> std::io::stdout();
+
+    <span style="color:#75715e">// Write msg to stdout
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(msg) <span style="color:#f92672">=</span> msg {
+      out.write_all(msg.as_bytes()).unwrap();
+    }
+
+    <span style="color:#75715e">// Write the contents of every buffer to stdout
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(buf) <span style="color:#f92672">=</span> zero_copy {
+      out.write_all(<span style="color:#f92672">&amp;</span>buf).unwrap();
+    }
+
+    Ok(()) <span style="color:#75715e">// No meaningful result
+</span><span style="color:#75715e"></span>  }),
+);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">runtime
+  .execute(
+    <span style="color:#e6db74">&#34;&lt;init&gt;&#34;</span>,
+    r<span style="color:#960050;background-color:#1e0010">#</span><span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">Deno.core.ops();
+</span><span style="color:#e6db74">Deno.core.registerErrorClass(&#39;Error&#39;, Error);
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">Deno.core.dispatchByName(&#39;op_print&#39;, 0, &#34;</span>Hello World<span style="color:#f92672">!</span><span style="color:#e6db74">&#34;, new Uint8Array([10]));
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">#</span>,).unwrap();
+</code></pre></div><p>首先，调用 register_op 注册 op_print 这个 op，然后在 JavaScript 调用 Deno.core.dispatchByName(&lsquo;op_print&rsquo;, 0, &ldquo;Hello World!&rdquo;, new Uint8Array([10])) 就可以在 stdout打印出 Hello World!</p>
+<p>那 Deno.core.dispatchByName 这个函数从哪来的呢？创建 JsRuntime 对象时，最后会执行 core.js 这个文件，我们看下这个文件。</p>
+<h3 id="corecorejs">core/core.js</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#e6db74">&#34;use strict&#34;</span>;
+
+((window) =&gt; {
+  <span style="color:#75715e">// Available on start due to bindings.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">core</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">Deno</span>.<span style="color:#a6e22e">core</span>;
+  <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">recv</span>, <span style="color:#a6e22e">send</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">core</span>;
+  
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ops</span>() {
+    <span style="color:#75715e">// op id 0 is a special value to retrieve the map of registered ops.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">newOpsCache</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">fromEntries</span>(<span style="color:#a6e22e">send</span>(<span style="color:#ae81ff">0</span>));
+    <span style="color:#a6e22e">opsCache</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">freeze</span>(<span style="color:#a6e22e">newOpsCache</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">opsCache</span>;
+  }
+  
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dispatch</span>(<span style="color:#a6e22e">opName</span>, <span style="color:#a6e22e">promiseId</span>, <span style="color:#a6e22e">control</span>, <span style="color:#a6e22e">zeroCopy</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">opsCache</span>[<span style="color:#a6e22e">opName</span>], <span style="color:#a6e22e">promiseId</span>, <span style="color:#a6e22e">control</span>, <span style="color:#a6e22e">zeroCopy</span>);
+  }
+  
+  Object.<span style="color:#a6e22e">assign</span>(window.<span style="color:#a6e22e">Deno</span>.<span style="color:#a6e22e">core</span>, {
+    <span style="color:#a6e22e">opAsync</span>,
+    <span style="color:#a6e22e">opSync</span>,
+    <span style="color:#a6e22e">dispatch</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">send</span>,
+    <span style="color:#a6e22e">dispatchByName</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">dispatch</span>,
+    <span style="color:#a6e22e">ops</span>,
+    <span style="color:#a6e22e">close</span>,
+    <span style="color:#a6e22e">resources</span>,
+    <span style="color:#a6e22e">registerErrorClass</span>,
+    <span style="color:#a6e22e">init</span>,
+  });
+})(<span style="color:#66d9ef">this</span>);
+</code></pre></div><p>所以，Rust 注册的 op_print 在 JavaScript 最终是通过 send(opsCache[opName], promiseId, control, zeroCopy) 调用的。</p>
+<p>在 JavaScript 代码最开始，我们需要先执行 Deno.core.ops()，这个函数调用了 send(0)，获取所有已经注册的 ops，之后 send 函数就可以通过 opName 来查找 opId。</p>
+<h3 id="corebindingsrs">core/bindings.rs</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#75715e">// send(0) returns obj of all ops, handle as special case
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> op_id <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+  <span style="color:#66d9ef">let</span> ops <span style="color:#f92672">=</span> OpTable::op_entries(state.op_state.clone());
+  rv.set(to_v8(scope, ops).unwrap());
+  <span style="color:#66d9ef">return</span>;
+}
+</code></pre></div><p>在 JavaScript 端调用 send 会转移到 Rust 端调用 bindings.rs#send 函数，该函数的主要逻辑如下</p>
+<ol>
+<li>获取跟 isoalte 关联的 JsRuntimeState 对象</li>
+<li>从参数中提取 OpId（如果 OpId 等于 0，从 JsRuntimeState 的 OpTable 中获取所有 ops 作为返回值，函数结束）</li>
+<li>从参数中提取 PromiseId 等数据</li>
+<li>根据 OpId 从 OpTable 查找 op，找到了就调用 OpTable::route_op 执行并设置返回值，找不到报错</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">let</span> op <span style="color:#f92672">=</span> OpTable::route_op(op_id, state.op_state.clone(), payload, buf);
+<span style="color:#66d9ef">match</span> op {
+  Op::Sync(resp) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">match</span> resp {
+    OpResponse::Value(v) <span style="color:#f92672">=&gt;</span> {
+      rv.set(v.to_v8(scope).unwrap());
+    }
+    OpResponse::Buffer(buf) <span style="color:#f92672">=&gt;</span> {
+      rv.set(boxed_slice_to_uint8array(scope, buf).into());
+    }
+  },
+  Op::Async(fut) <span style="color:#f92672">=&gt;</span> {
+    state.pending_ops.push(fut);
+    state.have_unpolled_ops <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+  }
+  Op::AsyncUnref(fut) <span style="color:#f92672">=&gt;</span> {
+    state.pending_unref_ops.push(fut);
+    state.have_unpolled_ops <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+  }
+  Op::NotFound <span style="color:#f92672">=&gt;</span> {
+    throw_type_error(scope, format<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;Unknown op id: {}&#34;</span>, op_id));
+  }
+}
+</code></pre></div><p>接下来我们再来看看注册 op 是怎么注册的</p>
+<h3 id="coreruntimers">core/runtime.rs</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">  <span style="color:#e6db74">/// Registers an op that can be called from JavaScript.
+</span><span style="color:#e6db74"></span>  <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">register_op</span><span style="color:#f92672">&lt;</span>F<span style="color:#f92672">&gt;</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self, name: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>, op_fn: <span style="color:#a6e22e">F</span>) -&gt; <span style="color:#a6e22e">OpId</span>
+  <span style="color:#66d9ef">where</span>
+    F: Fn(Rc<span style="color:#f92672">&lt;</span>RefCell<span style="color:#f92672">&lt;</span>OpState<span style="color:#f92672">&gt;&gt;</span>, OpPayload, Option<span style="color:#f92672">&lt;</span>ZeroCopyBuf<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Op</span> <span style="color:#f92672">+</span> &#39;static,
+  {
+    Self::state(self.v8_isolate())
+      .borrow_mut()
+      .op_state
+      .borrow_mut()
+      .op_table
+      .register_op(name, op_fn)
+  }
+</code></pre></div><p>JsRuntime 内部获取跟 isolate 关联的 op_state，再从 op_state 取出 op_table，调用 op_table.register_op(name, op_fn)</p>
+<h3 id="coreopsrs">core/ops.rs</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">OpFn</span> <span style="color:#f92672">=</span>
+  dyn Fn(Rc<span style="color:#f92672">&lt;</span>RefCell<span style="color:#f92672">&lt;</span>OpState<span style="color:#f92672">&gt;&gt;</span>, OpPayload, Option<span style="color:#f92672">&lt;</span>ZeroCopyBuf<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Op</span> <span style="color:#f92672">+</span> &#39;static;
+
+<span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">OpTable</span>(IndexMap<span style="color:#f92672">&lt;</span>String, Rc<span style="color:#f92672">&lt;</span>OpFn<span style="color:#f92672">&gt;&gt;</span>);
+
+<span style="color:#66d9ef">impl</span> OpTable {
+  <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">register_op</span><span style="color:#f92672">&lt;</span>F<span style="color:#f92672">&gt;</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self, name: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>, op_fn: <span style="color:#a6e22e">F</span>) -&gt; <span style="color:#a6e22e">OpId</span>
+  <span style="color:#66d9ef">where</span>
+    F: Fn(Rc<span style="color:#f92672">&lt;</span>RefCell<span style="color:#f92672">&lt;</span>OpState<span style="color:#f92672">&gt;&gt;</span>, OpPayload, Option<span style="color:#f92672">&lt;</span>ZeroCopyBuf<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Op</span> <span style="color:#f92672">+</span> &#39;static,
+  {
+    <span style="color:#66d9ef">let</span> (op_id, prev) <span style="color:#f92672">=</span> self.<span style="color:#ae81ff">0.</span>insert_full(name.to_owned(), Rc::new(op_fn));
+    assert<span style="color:#f92672">!</span>(prev.is_none());
+    op_id
+  }
+}
+</code></pre></div><p>OpTable 就是一个 IndexMap，保存注册的 ops。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">Op</span> {
+  Sync(OpResponse),
+  Async(OpAsyncFuture),
+  <span style="color:#e6db74">/// AsyncUnref is the variation of Async, which doesn&#39;t block the program
+</span><span style="color:#e6db74"></span>  <span style="color:#e6db74">/// exiting.
+</span><span style="color:#e6db74"></span>  AsyncUnref(OpAsyncFuture),
+  NotFound,
+}
+</code></pre></div><p>Op 是一个 enum 类型，共 4 种 variation。OpTable::route_op 执行用户注册的 op 并返回一个 Op variation。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">route_op</span>(
+  op_id: <span style="color:#a6e22e">OpId</span>,
+  state: <span style="color:#a6e22e">Rc</span><span style="color:#f92672">&lt;</span>RefCell<span style="color:#f92672">&lt;</span>OpState<span style="color:#f92672">&gt;&gt;</span>,
+  payload: <span style="color:#a6e22e">OpPayload</span>,
+  buf: Option<span style="color:#f92672">&lt;</span>ZeroCopyBuf<span style="color:#f92672">&gt;</span>,
+) -&gt; <span style="color:#a6e22e">Op</span> {
+  <span style="color:#66d9ef">let</span> op_fn <span style="color:#f92672">=</span> state
+    .borrow()
+    .op_table
+    .<span style="color:#ae81ff">0</span>
+    .get_index(op_id)
+    .map(<span style="color:#f92672">|</span>(_, op_fn)<span style="color:#f92672">|</span> op_fn.clone());
+  <span style="color:#66d9ef">match</span> op_fn {
+    Some(f) <span style="color:#f92672">=&gt;</span> (f)(state, payload, buf),
+    None <span style="color:#f92672">=&gt;</span> Op::NotFound,
+  }
+}
+</code></pre></div><p>deno 把 Rust 跟 V8 之间的交互做了很好的抽象封装 ，只需要在 Rust 端定义好 Op 名称和 OpFn， 调用 register_op 注册，然后就可以在 V8 执行Deno.core.dispatchByName(op_name, op_id, &hellip;) 来调用 Rust 的代码。</p>
+<p>下一篇我们将一起看看之前提到的 isolate 关联的状态 JsRuntimeState。</p>
+
+  </div>
+
+  <footer class="post-footer">
+    
+
+    
+    <div class="post-tags">
+      <i class="fas fa-tags"></i>
+      
+        <a href="/tags/rust">rust</a>
+        &nbsp;
+      
+        <a href="/tags/deno">deno</a>
+        &nbsp;
+      
+        <a href="/tags/javascript">javascript</a>
+        &nbsp;
+      
+        <a href="/tags/v8">v8</a>
+        &nbsp;
+      
+    </div>
+    
+
+    
+    
+    <div class="related-posts">
+      <h4>Related Posts</h4>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/deno-source-2/">Deno源码解读之deno_core（二）</a>
+      <br>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/deno-source-1/">Deno源码解读之deno_core（一）</a>
+      <br>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/event-loop-02/">Event loop 介绍（二）</a>
+      <br>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/event-loop-01/">Event loop 介绍（一）</a>
+      <br>
+      
+    </div>
+    
+  </footer>
+  
+  <div class="comments">
+  <div class="comments">
+
+
+
+</div>
+  </div>
+</article>
+
+  <div class="foot">
+  
+  &copy; 2017 - 2021 &#183;
+  <a href="/"> 记事本 </a> &#183;
+  Theme <a href="https://github.com/RainerChiang/simpleness">Simpleness</a> Powered by <a href="https://gohugo.io/">Hugo</a> &#183;
+  <a href="#"><i class="fas fa-chevron-up"></i></a>
+</div>
+</body>
+  <script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({container: document.getElementById('article')});
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.83.1" />
+  <title> Ansible 学习笔记（二） | 记事本 </title>
+  <link rel="stylesheet" href="https://linshaoyong.github.iocss/simpleness.css">
+  <link rel="canonical" href="https://linshaoyong.github.io/ansible-2/">
+  <link rel="alternate" type="application/rss+xml" href="" title="记事本">
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-126399136-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body class="container">
+  <nav class="navigation">
+  <div class="nav-left">
+    
+    <a href="https://linshaoyong.github.io">记事本</a>
+    
+    <div class="nav-item nav-title">
+      <a href="https://linshaoyong.github.io"> 记事本</a>
+    </div>
+    <div class="nav-item nav-menu">
+      
+    </div>
+  </div>
+  <div class="nav-item nav-right fontawesome">
+    
+    
+    <a href="https://github.com/linshaoyong" target="_blank">
+      <i title="GitHub" class="fab fa-github"></i>
+    </a>
+    
+    
+    <a href="https://linshaoyong.github.io/index.xml" target="_blank">
+      <i title="RSS" class="fas fa-rss"></i>
+    </a>
+    
+  </div>
+</nav>
+
+  
+<article class="post">
+  <header class="post-header">
+    <h1 style="text-align: center;" >Ansible 学习笔记（二）</h1>
+    <div class="post-metadata">
+    
+      <time datetime="2021-06-16T16:50:50Z">June 16, 2021</time> &nbsp; 
+    
+    
+    
+    
+    
+      <i class="far fa-clock"></i>
+      
+      
+      
+      
+        3 min
+      
+      15 s
+      &nbsp;
+    
+    
+    </div>
+  </header>
+
+  
+
+  <div class="post-text">
+    <p>Ansible playbook 使用 <a href="https://yaml.org/">YAML</a> 格式，模版文件使用 <a href="https://jinja.palletsprojects.com/">jinja2</a>，要完成功能强大的 playbook，需要对这两个格式比较熟悉。</p>
+<p>我们写一个部署 salt-master 的 playbook，一共包含3个文件。</p>
+<ol>
+<li>saltstack.repo：官方下载的 saltstack <a href="https://repo.saltproject.io/py3/redhat/8/x86_64/latest.repo">yum repo</a> 文件</li>
+<li>master.j2： salt-master 配置文件，内容需要依赖变量设置，所以是 jinja2 格式</li>
+<li>playbook-salt-master.yml：Ansible playbook 文件</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">├── master.j2
+├── playbook-salt-master.yml
+└── saltstack.repo
+</code></pre></div><p>playbook-salt-master.yml 就是 yaml 格式的 playbook 文件，每个 task 做的事情都不复杂。每一个 name 之后的属性都是 Ansible 提供的模块，用到了 ansible.builtin.rpm_key/copy/yum/file/template/systemd。正是这些功能强大的模块支持，让我们可以完成各种复杂的操作。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">example</span>
+  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">yes</span>
+
+  <span style="color:#f92672">handlers</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">restart salt-master</span>
+    <span style="color:#f92672">systemd</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">salt-master</span>
+      <span style="color:#f92672">state</span>: <span style="color:#ae81ff">restarted</span>
+  
+  <span style="color:#f92672">tasks</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Import key from url</span>
+    <span style="color:#f92672">ansible.builtin.rpm_key</span>:
+      <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+      <span style="color:#f92672">key</span>: <span style="color:#ae81ff">https://repo.saltproject.io/py3/redhat/7/x86_64/latest/SALTSTACK-GPG-KEY.pub</span>
+
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Ensure repo file</span>
+    <span style="color:#f92672">copy</span>:
+      <span style="color:#f92672">src</span>: <span style="color:#ae81ff">saltstack.repo</span>
+      <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/etc/yum.repos.d/saltstack.repo</span>
+
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install salt-master</span>
+    <span style="color:#f92672">yum</span>: 
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">salt-master</span>
+      <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create pki directory</span>
+    <span style="color:#f92672">file</span>: 
+      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/etc/salt/pki/master/minions </span>
+      <span style="color:#f92672">state</span>: <span style="color:#ae81ff">directory</span>
+
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure salt-master</span>
+    <span style="color:#f92672">template</span>: 
+      <span style="color:#f92672">src</span>: <span style="color:#ae81ff">master.j2 </span>
+      <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/etc/salt/master</span>
+    <span style="color:#f92672">notify</span>:
+      - <span style="color:#ae81ff">restart salt-master</span>
+
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Ensure salt-master started</span>
+    <span style="color:#f92672">systemd</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">salt-master</span>
+      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">yes</span>
+      <span style="color:#f92672">daemon_reload</span>: <span style="color:#66d9ef">yes</span>
+      <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
+</code></pre></div><p>saltstack.repo</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[salt-latest-repo]</span>
+<span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Salt repo for RHEL/CentOS 7 PY3</span>
+<span style="color:#a6e22e">baseurl</span><span style="color:#f92672">=</span><span style="color:#e6db74">https://repo.saltproject.io/py3/redhat/7/x86_64/latest</span>
+<span style="color:#a6e22e">skip_if_unavailable</span><span style="color:#f92672">=</span><span style="color:#e6db74">True</span>
+<span style="color:#a6e22e">failovermethod</span><span style="color:#f92672">=</span><span style="color:#e6db74">priority</span>
+<span style="color:#a6e22e">enabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">1</span>
+<span style="color:#a6e22e">enabled_metadata</span><span style="color:#f92672">=</span><span style="color:#e6db74">1</span>
+<span style="color:#a6e22e">gpgcheck</span><span style="color:#f92672">=</span><span style="color:#e6db74">1</span>
+<span style="color:#a6e22e">gpgkey</span><span style="color:#f92672">=</span><span style="color:#e6db74">https://repo.saltproject.io/py3/redhat/7/x86_64/latest/SALTSTACK-GPG-KEY.pub, https://repo.saltproject.io/py3/redhat/7/x86_64/latest/base/RPM-GPG-KEY-CentOS-7</span>
+</code></pre></div><p>master.j2</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">master_id: {{inventory_hostname}}
+</code></pre></div><p>salt-master 的配置项非常多，作为测试我们可以都用默认配置，只自定义配置 master_id 这一项。Ansible 里的变量非常灵活，后面再专门讲。</p>
+<h3 id="handlers">Handlers</h3>
+<p>前面的 playbook 定义了一个名叫 restart salt-master 的 handler，handler 本质上跟 task 类似，只不过 handler 需要被通知才执行。playbook 的 Configure salt-master 这个 task，定义了 notify 属性，当 master.j2 这个配置文件有变更时，通知 restart salt-master 这个 handler 执行。</p>
+<p>handler 执行遵循一定的准则，</p>
+<ol>
+<li>
+<p>playbook 执行完后才会运行 handlers</p>
+</li>
+<li>
+<p>只有被 notify 的 handler 才会执行</p>
+</li>
+<li>
+<p>handler 只会执行一次（除非特殊配置）</p>
+</li>
+<li>
+<p>如果 playbook 运行失败，未被 notify 的 handler 不会执行，除非指定 &ndash;force-handlers</p>
+</li>
+</ol>
+<p>handlers 常用于配置变更后重启服务，在例子中，如果配置没有变化，不会触发 notify，也就不会重启服务。</p>
+<p>结合上一篇的 inventory，可以执行 playbook 看看效果。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ansible-playbook playbook-salt-master.yml
+</code></pre></div><!-- raw HTML omitted -->
+
+  </div>
+
+  <footer class="post-footer">
+    
+
+    
+    <div class="post-tags">
+      <i class="fas fa-tags"></i>
+      
+        <a href="/tags/ansible">ansible</a>
+        &nbsp;
+      
+        <a href="/tags/devops">devops</a>
+        &nbsp;
+      
+    </div>
+    
+
+    
+    
+    <div class="related-posts">
+      <h4>Related Posts</h4>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/ansible-1/">Ansible 学习笔记（一）</a>
+      <br>
+      
+    </div>
+    
+  </footer>
+  
+  <div class="comments">
+  <div class="comments">
+
+
+
+</div>
+  </div>
+</article>
+
+  <div class="foot">
+  
+  &copy; 2017 - 2021 &#183;
+  <a href="/"> 记事本 </a> &#183;
+  Theme <a href="https://github.com/RainerChiang/simpleness">Simpleness</a> Powered by <a href="https://gohugo.io/">Hugo</a> &#183;
+  <a href="#"><i class="fas fa-chevron-up"></i></a>
+</div>
+</body>
+  <script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({container: document.getElementById('article')});
+</script>
+
+
+
+
+</html>

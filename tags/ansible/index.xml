@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ansible on 记事本</title>
+    <link>https://linshaoyong.github.io/tags/ansible/</link>
+    <description>Recent content in ansible on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 16 Jun 2021 16:50:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible 学习笔记（二）</title>
+      <link>https://linshaoyong.github.io/ansible-2/</link>
+      <pubDate>Wed, 16 Jun 2021 16:50:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/ansible-2/</guid>
+      <description>Ansible playbook 使用 YAML 格式，模版文件使用 jinja2，要完成功能强大的 playbook，需要对这两个格式比较熟悉。
+我们写一个部署 salt-master 的 playbook，一共包含3个文件。
+ saltstack.repo：官方下载的 saltstack yum repo 文件 master.j2： salt-master 配置文件，内容需要依赖变量设置，所以是 jinja2 格式 playbook-salt-master.yml：Ansible playbook 文件  ├── master.j2 ├── playbook-salt-master.yml └── saltstack.repo playbook-salt-master.yml 就是 yaml 格式的 playbook 文件，每个 task 做的事情都不复杂。每一个 name 之后的属性都是 Ansible 提供的模块，用到了 ansible.builtin.rpm_key/copy/yum/file/template/systemd。正是这些功能强大的模块支持，让我们可以完成各种复杂的操作。
+--- - hosts: example become: yes handlers: - name: restart salt-master systemd: name: salt-master state: restarted tasks: - name: Import key from url ansible.builtin.rpm_key: state: present key: https://repo.</description>
+    </item>
+    
+    <item>
+      <title>Ansible 学习笔记（一）</title>
+      <link>https://linshaoyong.github.io/ansible-1/</link>
+      <pubDate>Wed, 16 Jun 2021 09:45:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/ansible-1/</guid>
+      <description>Ansible 发布于 2012 年，当时不同任务需要用不同工具来完成，比如配置管理（Puppet, Chef, cfengine），软件部署（Capistrano, Fabric），命令执行（Func, pssh)）。Ansible 的作者 Michael DeHaan 在配置管理和基础设施维护方面有多年的工作经验，他决定用一种更简单更好的方式来完成这些任务，所以后来就有了 Ansible。
+目前 Ansible 在 Github 上有将近5万个 star，并于2015年10月被 Red Hat 收购，可见这款开源软件是多么的成功。因此掌握 Ansible 可说是一件很有用也比较保值的技能。
+起步 Ansible 是用 Python 写的，可以用 Pip 来安装，也可以用系统的包管理工具安装。
+然后，可以用 Vagrant 在本地启动一个或多个虚拟机，作为被 Ansible 管理的对象。
+我们主要聚焦在 Ansible 的使用上，环境搭建大家根据自己的情况来即可。理论上，最少需要一台安装 ansible 的管理机，一台可以通过 ssh 连接的被管理机。
+假设我有一台被管理机，IP 是 192.168.0.11，SSH 密钥免密码登录已经配好，那么创建一个 hosts.ini 文件
+[example] 192.168.0.11 接下来就可以通过 Ansible 来管理该设备了。
+# 指定 hosts.ini 文件里的 example 设备，使用 ansible 提供的 ping 模块 $ ansible -i hosts.ini example -m ping # 指定 hosts.</description>
+    </item>
+    
+  </channel>
+</rss>

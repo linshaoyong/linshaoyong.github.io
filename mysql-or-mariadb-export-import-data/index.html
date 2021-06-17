@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.83.1" />
+  <title> MySQL&amp;MariaDB数据导入导出小贴士 | 记事本 </title>
+  <link rel="stylesheet" href="https://linshaoyong.github.iocss/simpleness.css">
+  <link rel="canonical" href="https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/">
+  <link rel="alternate" type="application/rss+xml" href="" title="记事本">
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-126399136-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body class="container">
+  <nav class="navigation">
+  <div class="nav-left">
+    
+    <a href="https://linshaoyong.github.io">记事本</a>
+    
+    <div class="nav-item nav-title">
+      <a href="https://linshaoyong.github.io"> 记事本</a>
+    </div>
+    <div class="nav-item nav-menu">
+      
+    </div>
+  </div>
+  <div class="nav-item nav-right fontawesome">
+    
+    
+    <a href="https://github.com/linshaoyong" target="_blank">
+      <i title="GitHub" class="fab fa-github"></i>
+    </a>
+    
+    
+    <a href="https://linshaoyong.github.io/index.xml" target="_blank">
+      <i title="RSS" class="fas fa-rss"></i>
+    </a>
+    
+  </div>
+</nav>
+
+  
+<article class="post">
+  <header class="post-header">
+    <h1 style="text-align: center;" >MySQL&amp;MariaDB数据导入导出小贴士</h1>
+    <div class="post-metadata">
+    
+      <time datetime="2018-02-12T21:50:50Z">February 12, 2018</time> &nbsp; 
+    
+    
+    
+    
+    
+      <i class="far fa-clock"></i>
+      
+      
+      
+      
+      45 s
+      &nbsp;
+    
+    
+    </div>
+  </header>
+
+  
+
+  <div class="post-text">
+    <p>有时候需要用mysqldump来导数据，记录下省得查文档。</p>
+<h2 id="导出数据到sql文件">导出数据到sql文件</h2>
+<pre><code>mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&quot;t&gt;a and t&lt;b&quot; &gt; data.sql
+</code></pre><h2 id="导出数据到压缩文件">导出数据到压缩文件</h2>
+<pre><code>mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&quot;t&gt;a and t&lt;b&quot; | gzip &gt; data.sql.gz
+</code></pre><h2 id="后台运行导出数据">后台运行导出数据</h2>
+<pre><code>nohup sh -c 'mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&quot;t&gt;a and t&lt;b&quot; | gzip &gt; data.sql.gz' &amp;
+</code></pre><h2 id="后台运行导入数据">后台运行导入数据</h2>
+<pre><code>nohup sh -c 'gunzip &lt; data.sql.gz | mysql dbname' &amp;
+</code></pre><h2 id="导入数据时显示进度">导入数据时显示进度：</h2>
+<pre><code>pv data.sql.gz | gunzip | mysql dbname
+</code></pre><ul>
+<li>pv需要单独安装</li>
+<li>可以在用户目录下使用.my.cnf指定用户名、密码</li>
+</ul>
+
+  </div>
+
+  <footer class="post-footer">
+    
+
+    
+    <div class="post-tags">
+      <i class="fas fa-tags"></i>
+      
+        <a href="/tags/mysql">mysql</a>
+        &nbsp;
+      
+        <a href="/tags/mariadb">mariadb</a>
+        &nbsp;
+      
+    </div>
+    
+
+    
+    
+  </footer>
+  
+  <div class="comments">
+  <div class="comments">
+
+
+
+</div>
+  </div>
+</article>
+
+  <div class="foot">
+  
+  &copy; 2017 - 2021 &#183;
+  <a href="/"> 记事本 </a> &#183;
+  Theme <a href="https://github.com/RainerChiang/simpleness">Simpleness</a> Powered by <a href="https://gohugo.io/">Hugo</a> &#183;
+  <a href="#"><i class="fas fa-chevron-up"></i></a>
+</div>
+</body>
+  <script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({container: document.getElementById('article')});
+</script>
+
+
+
+
+</html>
