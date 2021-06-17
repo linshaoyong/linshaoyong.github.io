@@ -6,7 +6,21 @@
     <description>Recent content in Posts on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Jun 2021 16:50:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jun 2021 00:02:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible 学习笔记（三）</title>
+      <link>https://linshaoyong.github.io/ansible-3/</link>
+      <pubDate>Thu, 17 Jun 2021 00:02:50 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/ansible-3/</guid>
+      <description>Ansible playbook 可以通过 import_playbook 的方式，在 playbook 中组合其他 playbook。
+- hosts: webserver tasks: [...] - import_playbook: webapp.yml - import_playbook: database.yml task 也可以拆分成多个文件，再用 import_tasks 组合在一起运行。
+tasks: - import_tasks: tasks/common.yml - import_tasks: tasks/php.yml - import_tasks: tasks/mysql.yml 在管理的设备和软件不多的情况下，可以使用这种方式。随着项目的增大，Ansible role 才是最佳的使用方式。
+如果我们用 role 改写上篇文章的例子，最终的 playbook-salt-master.yml 将变得很简洁。
+--- - hosts: example become: yes roles: - salt-master 所有的 tasks 都搬到 salt-master role 对应的目录 roles/salt-master 下面
+roles └── salt-master ├── defaults │ └── main.yml ├── files │ └── saltstack.</description>
+    </item>
+    
     <item>
       <title>Ansible 学习笔记（二）</title>
       <link>https://linshaoyong.github.io/ansible-2/</link>
