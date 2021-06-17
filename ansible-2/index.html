@@ -74,7 +74,7 @@ if (!doNotTrack) {
       
         3 min
       
-      15 s
+      18 s
       &nbsp;
     
     
@@ -172,7 +172,8 @@ if (!doNotTrack) {
 <p>handlers 常用于配置变更后重启服务，在例子中，如果配置没有变化，不会触发 notify，也就不会重启服务。</p>
 <p>结合上一篇的 inventory，可以执行 playbook 看看效果。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ansible-playbook playbook-salt-master.yml
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>可以看到 handler 在最后执行
+<img src="images/playbook.png" alt="result"></p>
 
   </div>
 
