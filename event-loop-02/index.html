@@ -89,13 +89,13 @@ if (!doNotTrack) {
     <p>event loop通常联合<a href="https://en.wikipedia.org/wiki/Reactor_pattern">Reactor设计模式</a>一起使用。在Node.js中每个异步IO操作都对应一个handler（也叫回调函数/callback）。当IO操作触发事件，相应的回调函数进入执行队列，event loop从队列中取出callback执行。event loop是单线程的，所以callback要尽量轻量。</p>
 <h2 id="nodejs">Node.js</h2>
 <p>Node.js进程启动后，先初始化event loop，再执行JavaScript文件，之后通过event loop循环执行异步操作的callbacks。在Node.js里，event loop分为多个阶段（phase），如下图所示</p>
-<!-- raw HTML omitted -->
+<p><img src="images/event_loop_01.png" alt="result"></p>
 <p>每个phase都有一个队列，存放该phase需要执行的callbacks。每个phase的说明可以参考<a href="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/">Node.js官方文档</a>，解释得比较详细了。</p>
 <h2 id="libuv">libuv</h2>
 <p>libuv is a multi-platform support library with a focus on asynchronous I/O. It was primarily developed for use by Node.js, but it’s also used by Luvit, Julia, pyuv, and others.</p>
 <p>实际上，Node.js的event loop依赖<a href="https://github.com/libuv/libuv">libuv</a>实现，可以通过libuv了解更底层的实现。</p>
 <p>event loop可以说是libuv的核心部分，在libuv也可以看到跟Node.js一样的phase</p>
-<!-- raw HTML omitted -->
+<p><img src="images/event_loop_02.png" alt="result"></p>
 <p>从libuv的<a href="https://github.com/libuv/libuv/blob/v1.x/src/unix/core.c">代码</a>，可以看到event loop的执行流程。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">uv_run</span>(uv_loop_t<span style="color:#f92672">*</span> loop, uv_run_mode mode) {
   <span style="color:#66d9ef">int</span> timeout;
@@ -167,7 +167,7 @@ if (!doNotTrack) {
 </ul>
 <p>当然，event loop是一种设计模式的组成部分，并未规定实现方式，这个只是libuv/Node.js的实现方式。作为使用者，多数情况下也不必全部了解这些phase，可以适当简化，更容易理解JavaScript代码的执行顺序。</p>
 <p>我们可以通过下图更清晰地了解Node.js event loop的执行流程。（以下图片和例子都来自<a href="https://blog.insiderattack.net/handling-io-nodejs-event-loop-part-4-418062f917d1">这篇文章</a>）</p>
-<p><a href="https://blog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810"><!-- raw HTML omitted --></a></p>
+<p><img src="images/event_loop_01.png" alt="result"></p>
 <p>大家可以先运行下这个代码，看是否知道执行结果。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Promise.<span style="color:#a6e22e">resolve</span>().<span style="color:#a6e22e">then</span>(() =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;promise1 resolved&#39;</span>));
 Promise.<span style="color:#a6e22e">resolve</span>().<span style="color:#a6e22e">then</span>(() =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;promise2 resolved&#39;</span>));
@@ -192,7 +192,7 @@ Promise.<span style="color:#a6e22e">resolve</span>().<span style="color:#a6e22e"
 <p>process.nextTick是Node.js提供的功能，在event loop开始前，或每个phase开始前，如果存在process.nextTick callbacks，会先执行process.nextTick callbacks。</p>
 </blockquote>
 <p>我们运行上面的代码，得到如下结果</p>
-<pre><code>next tick1
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">next tick1
 next tick2
 next tick3
 promise1 resolved
@@ -206,7 +206,7 @@ set immediate1
 set immediate2
 set immediate3
 set immediate4
-</code></pre><ol>
+</code></pre></div><ol>
 <li>先执行 process.nextTick callbacks</li>
 <li>然后执行 Promise callbacks</li>
 <li>第3个Promise callback调用了process.nextTick，当Promise callbacks全部执行完，优先执行process.nextTick callback</li>

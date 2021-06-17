@@ -76,7 +76,7 @@ if (!doNotTrack) {
       
         6 min
       
-      48 s
+      55 s
       &nbsp;
     
     
@@ -99,15 +99,15 @@ if (!doNotTrack) {
 <h3 id="nodejs">Node.js</h3>
 <p>Node.js® is a JavaScript runtime built on Chrome&rsquo;s V8 JavaScript engine.</p>
 <p>为了方便使用多版本Node.js，可以用 <a href="https://github.com/nvm-sh/nvm">nvm</a>安装node。</p>
-<pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-nvm install node
-</code></pre><h3 id="v8">V8</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+$ nvm install node
+</code></pre></div><h3 id="v8">V8</h3>
 <p>V8 is Google’s open source high-performance JavaScript and WebAssembly engine, written in C++. It is used in Chrome and in Node.js, among others.</p>
 <p>有时候，我们想用V8直接运行JavaScript代码，所以建议独立安装一个V8程序。不过自己编译V8费时费力，可以使用 <a href="https://github.com/GoogleChromeLabs/jsvu">jsvu</a> 安装各种平台下的JavaScript引擎（不限于V8）</p>
-<pre><code>npm install jsvu -g
-jsvu --os=mac64 --engines=v8-debug
-~/jsvu/v8-debug --help
-</code></pre><h4 id="runtime-vs-engine">Runtime vs Engine</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ npm install jsvu -g
+$ jsvu --os<span style="color:#f92672">=</span>mac64 --engines<span style="color:#f92672">=</span>v8-debug
+$ ~/jsvu/v8-debug --help
+</code></pre></div><h4 id="runtime-vs-engine">Runtime vs Engine</h4>
 <p>从Node.js和V8官方介绍可以看出，Node.js是JavaScript runtime，V8是JavaScript engine。</p>
 <p>engine负责JavaScript代码的执行，可能是解释执行，也可能通过 <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT</a> 技术，将JavaScript编译成机器代码执行。runtime使用engine，并增加额外的功能，甚至很多功能跟JavaScript无关，比如浏览器也是JavaScript runtime。熟悉Java的同学可以用JVM/JRE来类比。</p>
 <p>V8只支持ECMAScript规范的JavaScript，像console.log/setTimeout并不属于ECMAScript规范，是由runtime实现的。<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">Event loop</a>也不属于ECMAScript规范，也需要由runtime来实现。</p>
@@ -122,10 +122,13 @@ jsvu --os=mac64 --engines=v8-debug
 <span style="color:#a6e22e">addAsync</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">result</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Result: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">result</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>))
 <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;after&#39;</span>)
 </code></pre></div><p>将上面的代码保存到test.js文件，执行node test.js或v8-debug test.js，输出结果为</p>
-<pre><code>before
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">before
 after
-Result: 3
-</code></pre><!-- raw HTML omitted -->
+Result: <span style="color:#ae81ff">3</span>
+</code></pre></div><p><img src="images/event_loop_01.png" alt="result"></p>
+<blockquote>
+<p>实线代表函数调用，虚线代表控制权转移</p>
+</blockquote>
 <p>执行流程如上图所示，</p>
 <ol>
 <li>console.log(&lsquo;before&rsquo;)进入调用栈运行，打印 before</li>
