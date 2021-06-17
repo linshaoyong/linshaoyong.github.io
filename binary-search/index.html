@@ -76,7 +76,7 @@ if (!doNotTrack) {
       
         5 min
       
-      48 s
+      47 s
       &nbsp;
     
     
@@ -99,8 +99,8 @@ if (!doNotTrack) {
         <span style="color:#66d9ef">else</span>:
             left <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
     <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-</code></pre></div><p>LeetCode 上有挺多 Binary Search 的题目，其中 Hard 难度也不少，难点往往在于如何判断出可以用 Binary Search 来解决。事实上能用 Binary Search 求解的问题，都是有共性的。</p>
-<p>以猜0到100以内的数为例，</p>
+</code></pre></div><p>LeetCode 上有挺多 Binary Search 的题目，其中 Hard 难度也不少，难点往往在于如何判断出可以用 Binary Search 来解决。</p>
+<p>以猜0到100以内的数为例，能用 Binary Search 求解的问题，一般有以下特点，</p>
 <ul>
 <li>答案在某个范围之内， 0 &lt;= answer &lt;= 100</li>
 <li>中间值可能就是答案，如果不是，有一半的范围可以排除。比如 answer &lt; 50，那么 [50, 100] 可以排除掉，答案在 [0, 50) 之间</li>
