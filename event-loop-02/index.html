@@ -167,7 +167,7 @@ if (!doNotTrack) {
 </ul>
 <p>当然，event loop是一种设计模式的组成部分，并未规定实现方式，这个只是libuv/Node.js的实现方式。作为使用者，多数情况下也不必全部了解这些phase，可以适当简化，更容易理解JavaScript代码的执行顺序。</p>
 <p>我们可以通过下图更清晰地了解Node.js event loop的执行流程。（以下图片和例子都来自<a href="https://blog.insiderattack.net/handling-io-nodejs-event-loop-part-4-418062f917d1">这篇文章</a>）</p>
-<p><img src="images/event_loop_01.png" alt="result"></p>
+<p><img src="images/event_loop_03.png" alt="result"></p>
 <p>大家可以先运行下这个代码，看是否知道执行结果。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Promise.<span style="color:#a6e22e">resolve</span>().<span style="color:#a6e22e">then</span>(() =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;promise1 resolved&#39;</span>));
 Promise.<span style="color:#a6e22e">resolve</span>().<span style="color:#a6e22e">then</span>(() =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;promise2 resolved&#39;</span>));
