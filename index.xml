@@ -131,14 +131,10 @@ git clone git@github.com:denoland/deno.git 然后，进入 deno 目录，看下�
       <pubDate>Wed, 10 Mar 2021 22:12:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/event-loop-02/</guid>
-      <description>event loop通常联合Reactor设计模式一起使用。在Node.js中每个异步IO操作都对应一个handler（也叫回调函数/callback）。当IO操作触发事件，相应的回调函数进入执行队列，event loop从队列中取出callback执行。event loop是单线程的，所以callback要尽量轻量。
-Node.js Node.js进程启动后，先初始化event loop，再执行JavaScript文件，之后通过event loop循环执行异步操作的callbacks。在Node.js里，event loop分为多个阶段（phase），如下图所示
-每个phase都有一个队列，存放该phase需要执行的callbacks。每个phase的说明可以参考Node.js官方文档，解释得比较详细了。
-libuv libuv is a multi-platform support library with a focus on asynchronous I/O. It was primarily developed for use by Node.js, but it’s also used by Luvit, Julia, pyuv, and others.
-实际上，Node.js的event loop依赖libuv实现，可以通过libuv了解更底层的实现。
-event loop可以说是libuv的核心部分，在libuv也可以看到跟Node.js一样的phase
-从libuv的代码，可以看到event loop的执行流程。
-int uv_run(uv_loop_t* loop, uv_run_mode mode) { int timeout; int r; int ran_pending; r = uv__loop_alive(loop); if (!r) uv__update_time(loop); while (r != 0 &amp;amp;&amp;amp; loop-&amp;gt;stop_flag == 0) { uv__update_time(loop); uv__run_timers(loop); ran_pending = uv__run_pending(loop); uv__run_idle(loop); uv__run_prepare(loop); timeout = 0; if ((mode == UV_RUN_ONCE &amp;amp;&amp;amp; !</description>
+      <description>event loop 通常联合Reactor设计模式一起使用。在 Node.js 中每个异步 IO 操作都对应一个 handler（也叫回调函数/callback）。当 IO 操作触发事件，相应的回调函数进入执行队列，event loop 从队列中取出 callback 执行。event loop 是单线程的，所以 callback 要尽量轻量。
+Node.js Node.js 进程启动后，先初始化 event loop，再执行 JavaScript 文件，之后通过 event loop 循环执行异步操作的 callbacks。Node.js 的 event loop 分为多个阶段（phase），如下图所示
+每个 phase 都有一个队列，存放该 phase 需要执行的 callbacks。每个 phase 的说明可以参考Node.js 官方文档，解释得比较详细了。
+libuv libuv is a multi-platform support library with a focus on asynchronous I/O. It was primarily developed for use by Node.js, but it’s also used by Luvit, Julia, pyuv, and others.</description>
     </item>
     
     <item>
