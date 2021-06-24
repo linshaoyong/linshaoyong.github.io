@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.83.1" />
+  <title> StalStack 最佳实践 | 记事本 </title>
+  <link rel="stylesheet" href="https://linshaoyong.github.io/css/simpleness.css">
+  <link rel="canonical" href="https://linshaoyong.github.io/saltstack-best-practices/">
+  <link rel="alternate" type="application/rss+xml" href="" title="记事本">
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-126399136-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body class="container">
+  <nav class="navigation">
+  <div class="nav-left">
+    
+    <div class="nav-item nav-title">
+      <a href="https://linshaoyong.github.io/"> 记事本</a>
+    </div>
+    <div class="nav-item nav-menu">
+      
+      <a href="/"> Home</a>
+      
+      <a href="/about/"> About</a>
+      
+    </div>
+  </div>
+  <div class="nav-item nav-right fontawesome">
+    
+    
+    <a href="https://github.com/linshaoyong" target="_blank">
+      <i title="GitHub" class="fab fa-github"></i>
+    </a>
+    
+    
+    <a href="https://linshaoyong.github.io/index.xml" target="_blank">
+      <i title="RSS" class="fas fa-rss"></i>
+    </a>
+    
+  </div>
+</nav>
+
+  
+<article class="post">
+  <header class="post-header">
+    <h1 style="text-align: center;" >StalStack 最佳实践</h1>
+    <div class="post-metadata">
+    
+      <time datetime="2021-06-24T00:02:50Z">June 24, 2021</time> &nbsp; 
+    
+    
+    
+    
+    
+      <i class="far fa-clock"></i>
+      
+      
+      
+      
+        5 min
+      
+      15 s
+      &nbsp;
+    
+    
+    </div>
+  </header>
+
+  
+
+  <div class="post-text">
+    <h4 id="通用规则">通用规则</h4>
+<ul>
+<li>应尽可能强调模块化和清晰性</li>
+<li>在 pillars 和 states 之间建立明确的关系</li>
+<li>在必要的时候使用变量，但不要过度使用它们</li>
+<li>将敏感信息保存在 pillars</li>
+<li>不要在 pillars top 文件中用 grains 匹配任何敏感的 pillars</li>
+</ul>
+<h4 id="遵循-fomulas-的方式构造-states">遵循 fomulas 的方式构造 states</h4>
+<p><a href="https://github.com/saltstack-formulas">Formulas</a> 是 Salt 官方预先写好的 states，一个 Salt Formula 对应一个 Git 仓库。如果我们要直接使用，在 salt-master 加入相应配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gitfs_remotes:
+  - https://github.com/saltstack-formulas/apache-formula
+  - https://github.com/saltstack-formulas/memcached-formula
+</code></pre></div><p>这样就可以使用 salt 提供的 formula 安装这两个软件了。</p>
+<p>我们看下 <a href="https://github.com/saltstack-formulas/mysql-formula">MySQL</a> 这个 formula 的目录结构，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/srv/salt/mysql/files/         <span style="color:#75715e"># 主要是配置文件</span>
+/srv/salt/mysql/client.sls     <span style="color:#75715e"># 客户端安装</span>
+/srv/salt/mysql/map.jinja      <span style="color:#75715e"># 变量定义</span>
+/srv/salt/mysql/python.sls     <span style="color:#75715e"># python 客户端安装</span>
+/srv/salt/mysql/server.sls     <span style="color:#75715e"># 服务端安装</span>
+</code></pre></div><p><code>/srv/salt/mysql/top.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">base</span>:
+  <span style="color:#f92672">&#39;web*&#39;</span>:
+    - <span style="color:#ae81ff">mysql.client</span>
+    - <span style="color:#ae81ff">mysql.python</span>
+  <span style="color:#f92672">&#39;db*&#39;</span>:
+    - <span style="color:#ae81ff">mysql.server</span>
+</code></pre></div><p>这样就能清晰地看到依赖 mysql 的设备中，web* 安装客户端，db* 安装服务端。</p>
+<p>再看另外一个 <a href="https://github.com/saltstack-formulas/vim-formula">vim</a> 的例子，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/srv/salt/vim/files/           <span style="color:#75715e"># 主要是配置文件</span>
+/srv/salt/vim/absent.sls       <span style="color:#75715e"># 卸载 vim</span>
+/srv/salt/vim/init.sls         <span style="color:#75715e"># 安装 vim 并配置</span>
+/srv/salt/vim/map.jinja        <span style="color:#75715e"># 变量定义</span>
+/srv/salt/vim/nerdtree.sls     <span style="color:#75715e"># NERD tree 插件配置</span>
+/srv/salt/vim/pyflakes.sls     <span style="color:#75715e"># pyflakes 插件配置</span>
+/srv/salt/vim/salt.sls         <span style="color:#75715e"># salt 插件配置</span>
+</code></pre></div><p><code>/srv/salt/vim/top.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">base</span>:
+  <span style="color:#f92672">&#39;web*&#39;</span>:
+    - <span style="color:#ae81ff">vim</span>
+    - <span style="color:#ae81ff">vim.nerdtree</span>
+    - <span style="color:#ae81ff">vim.pyflakes</span>
+    - <span style="color:#ae81ff">vim.salt</span>
+  <span style="color:#f92672">&#39;db*&#39;</span>:
+    - <span style="color:#ae81ff">vim.absent</span>
+</code></pre></div><p>我们自己写 states 时，多参考这些 formula，有现成的拿来用就行。</p>
+<h4 id="构造-pillars-文件">构造 pillars 文件</h4>
+<p><a href="https://docs.saltproject.io/en/latest/topics/pillar/index.html">Pillars</a> 用于存储与 minion 相关的数据（特别是需要加密的数据），在构造 pillars 时要尽量做到让使用者容易查看、修改和理解。下面看个例子，</p>
+<p><code>/srv/pillar/top.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">base</span>:
+  <span style="color:#f92672">&#39;*&#39;</span>:
+    - <span style="color:#ae81ff">apache</span>
+<span style="color:#f92672">dev</span>:
+  <span style="color:#f92672">&#39;os:Debian&#39;</span>:
+    - <span style="color:#f92672">match</span>: <span style="color:#ae81ff">grain</span>
+    - <span style="color:#ae81ff">vim</span>
+<span style="color:#f92672">test</span>:
+  <span style="color:#f92672">&#39;* and not G@os</span>: <span style="color:#f92672">Debian&#39;</span>:
+    - <span style="color:#f92672">match</span>: <span style="color:#ae81ff">compound</span>
+    - <span style="color:#ae81ff">emacs</span>
+</code></pre></div><p>注意，pillars 的 top.sls 不是用于定义变量的，而是定义不同环境下设备和具体 pillar 文件的对应关系。</p>
+<p>比如 apache 的变量保存在相应的 apache.sls 中。</p>
+<p><code>/srv/pillar/apache.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apache</span>:
+  <span style="color:#f92672">lookup</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+    <span style="color:#f92672">config</span>:
+      <span style="color:#f92672">tmpl</span>: <span style="color:#ae81ff">/etc/httpd/httpd.conf</span>
+</code></pre></div><h4 id="定义变量">定义变量</h4>
+<p>虽然变量可以直接在 state sls 里定义，当时通常不这么做。</p>
+<p><code>/srv/salt/apache/conf.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># 不推荐在这里定义变量</span>
+{<span style="color:#ae81ff">% set name = &#39;httpd&#39; %}</span>
+{<span style="color:#ae81ff">% set tmpl = &#39;salt://apache/files/httpd.conf&#39; %} </span>
+
+<span style="color:#f92672">include</span>:
+  - <span style="color:#ae81ff">apache</span>
+
+<span style="color:#f92672">apache_conf</span>:
+  <span style="color:#f92672">file.managed</span>:
+    - <span style="color:#f92672">name</span>: {{ <span style="color:#ae81ff">name }}</span>
+    - <span style="color:#f92672">source</span>: {{ <span style="color:#ae81ff">tmpl }}</span>
+    - <span style="color:#f92672">template</span>: <span style="color:#ae81ff">jinja</span>
+    - <span style="color:#f92672">user</span>: <span style="color:#ae81ff">root</span>
+    - <span style="color:#f92672">watch_in</span>:
+      - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">apache</span>
+</code></pre></div><p>建议定义在 pillar 里，这样可以被多个 state 共享。</p>
+<p><code>/srv/pillar/apache.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apache</span>:
+  <span style="color:#f92672">lookup</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+    <span style="color:#f92672">config</span>:
+      <span style="color:#f92672">tmpl</span>: <span style="color:#ae81ff">salt://apache/files/httpd.conf</span>
+</code></pre></div><p><code>/srv/salt/apache/conf.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{<span style="color:#ae81ff">% from &#34;apache/map.jinja&#34; import apache with context %}</span>
+
+<span style="color:#f92672">include</span>:
+  - <span style="color:#ae81ff">apache</span>
+
+<span style="color:#f92672">apache_conf</span>:
+  <span style="color:#f92672">file.managed</span>:
+    - <span style="color:#f92672">name</span>: {{ <span style="color:#ae81ff">salt[&#39;pillar.get&#39;](&#39;apache:lookup:name&#39;) }}</span>
+    - <span style="color:#f92672">source</span>: {{ <span style="color:#ae81ff">salt[&#39;pillar.get&#39;](&#39;apache:lookup:config:tmpl&#39;) }}</span>
+    - <span style="color:#f92672">template</span>: <span style="color:#ae81ff">jinja</span>
+    - <span style="color:#f92672">user</span>: <span style="color:#ae81ff">root</span>
+    - <span style="color:#f92672">watch_in</span>:
+      - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">apache</span>
+</code></pre></div><p>平台特定的变量写在 map.jinja 文件，跟 state 放在同一目录。</p>
+<p><code>/srv/salt/apache/map.jinja</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{<span style="color:#ae81ff">% set mysql = salt[&#39;grains.filter_by&#39;]({</span>
+    <span style="color:#f92672">&#39;Debian&#39;</span>: {
+        <span style="color:#f92672">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;apache2&#39;</span>,
+        <span style="color:#f92672">&#39;config&#39;</span>: <span style="color:#e6db74">&#39;/etc/apache2/apache.conf&#39;</span>,
+    },
+    <span style="color:#f92672">&#39;RedHat&#39;</span>: {
+        <span style="color:#f92672">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;httpd&#39;</span>,
+        <span style="color:#f92672">&#39;config&#39;</span>: <span style="color:#e6db74">&#39;/etc/httpd/httpd.conf&#39;</span>,
+    },
+    <span style="color:#f92672">&#39;Gentoo&#39;</span>: {
+        <span style="color:#f92672">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;apache2&#39;</span>,
+        <span style="color:#f92672">&#39;config&#39;</span>: <span style="color:#e6db74">&#39;/etc/httpd/httpd.conf&#39;</span>,
+    },
+}, <span style="color:#ae81ff">merge=salt[&#39;pillar.get&#39;](&#39;apache:lookup&#39;)) %}</span>
+</code></pre></div><p>Pillar 数据会消耗更多 salt-master 的资源，如果 minion 众多，可能对 master 造成冲击，建议将不敏感的也不会多处引用的变量，写在 state 内部的 map.jinja 文件。</p>
+<h4 id="states-内部模块化">states 内部模块化</h4>
+<p>如何确保 state 模块化是 Salt 中需要理解的关键概念之一。创建 state 时，必须考虑是否可以重复使用，以及操作时有什么依赖。下面看个例子，</p>
+<p><code>/srv/salt/apache/init.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">httpd</span>:
+  <span style="color:#f92672">pkg</span>:
+    - <span style="color:#ae81ff">installed</span>
+  <span style="color:#f92672">service.running</span>:
+    - <span style="color:#f92672">enable</span>: <span style="color:#66d9ef">True</span>
+
+<span style="color:#f92672">/etc/httpd/httpd.conf</span>:
+  <span style="color:#f92672">file.managed</span>:
+    - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">salt://apache/files/httpd.conf</span>
+    - <span style="color:#f92672">template</span>: <span style="color:#ae81ff">jinja</span>
+    - <span style="color:#f92672">watch_in</span>:
+      - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">httpd</span>
+</code></pre></div><p>这是个很不好的写法，httpd 直接作为 state ID，但是一个软件的包名和服务名很可能是不一样的。重构之后如下，</p>
+<p><code>/srv/salt/apache/init.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apache</span>:
+  <span style="color:#f92672">pkg.installed</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+  <span style="color:#f92672">service.running</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+    - <span style="color:#f92672">enable</span>: <span style="color:#66d9ef">True</span>
+
+<span style="color:#f92672">apache_conf</span>:
+  <span style="color:#f92672">file.managed</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">/etc/httpd/httpd.conf</span>
+    - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">salt://apache/files/httpd.conf</span>
+    - <span style="color:#f92672">template</span>: <span style="color:#ae81ff">jinja</span>
+    - <span style="color:#f92672">watch_in</span>:
+      - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">apache</span>
+</code></pre></div><p>进步了一些，但还存在一些问题，比如值都是静态写在 state，不能适配多平台安装。软件和配置写在同一个 state 里，不支持只需要安装软件并使用默认配置的场景。再次重构如下，</p>
+<p><code>/srv/salt/apache/map.jinja</code>:</p>
+<pre><code class="language-jinja2" data-lang="jinja2">{% set apache = salt['grains.filter_by']({
+    'Debian': {
+        'server': 'apache2',
+        'service': 'apache2',
+        'conf': '/etc/apache2/apache.conf',
+    },
+    'RedHat': {
+        'server': 'httpd',
+        'service': 'httpd',
+        'conf': '/etc/httpd/httpd.conf',
+    },
+}, merge=salt['pillar.get']('apache:lookup')) %}
+</code></pre><p><code>/srv/pillar/apache.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apache</span>:
+  <span style="color:#f92672">lookup</span>:
+    <span style="color:#f92672">config</span>:
+      <span style="color:#f92672">tmpl</span>: <span style="color:#ae81ff">salt://apache/files/httpd.conf</span>
+</code></pre></div><p><code>/srv/salt/apache/init.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{<span style="color:#ae81ff">% from &#34;apache/map.jinja&#34; import apache with context %}</span>
+
+<span style="color:#f92672">apache</span>:
+  <span style="color:#f92672">pkg.installed</span>:
+    - <span style="color:#f92672">name</span>: {{ <span style="color:#ae81ff">apache.server }}</span>
+  <span style="color:#f92672">service.running</span>:
+    - <span style="color:#f92672">name</span>: {{ <span style="color:#ae81ff">apache.service }}</span>
+    - <span style="color:#f92672">enable</span>: <span style="color:#66d9ef">True</span>
+</code></pre></div><p><code>/srv/salt/apache/conf.sls</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{<span style="color:#ae81ff">% from &#34;apache/map.jinja&#34; import apache with context %}</span>
+
+<span style="color:#f92672">include</span>:
+  - <span style="color:#ae81ff">apache</span>
+
+<span style="color:#f92672">apache_conf</span>:
+  <span style="color:#f92672">file.managed</span>:
+    - <span style="color:#f92672">name</span>: {{ <span style="color:#ae81ff">apache.conf }}</span>
+    - <span style="color:#f92672">source</span>: {{ <span style="color:#ae81ff">salt[&#39;pillar.get&#39;](&#39;apache:lookup:config:tmpl&#39;) }}</span>
+    - <span style="color:#f92672">template</span>: <span style="color:#ae81ff">jinja</span>
+    - <span style="color:#f92672">user</span>: <span style="color:#ae81ff">root</span>
+    - <span style="color:#f92672">watch_in</span>:
+      - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">apache</span>
+</code></pre></div><p>这次拆分成 4 个文件，使用 pillar 和 map.jinja 定了变量，state 里动态值改成读取变量，软件和配置拆分到各自的 state。</p>
+
+  </div>
+
+  <footer class="post-footer">
+    
+
+    
+    <div class="post-tags">
+      <i class="fas fa-tags"></i>
+      
+        <a href="/tags/saltstack">saltstack</a>
+        &nbsp;
+      
+        <a href="/tags/devops">devops</a>
+        &nbsp;
+      
+    </div>
+    
+
+    
+    
+    <div class="related-posts">
+      <h4>Related Posts</h4>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/ansible-inventory/">Ansible 学习笔记（四）</a>
+      <br>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/ansible-role/">Ansible 学习笔记（三）</a>
+      <br>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/ansible-playbook/">Ansible 学习笔记（二）</a>
+      <br>
+      
+      <i class="fas fa-paperclip"></i>
+      <a href="/ansible-start/">Ansible 学习笔记（一）</a>
+      <br>
+      
+    </div>
+    
+  </footer>
+  
+  <div class="comments">
+  <div class="comments">
+
+
+
+</div>
+  </div>
+</article>
+
+  <div class="foot">
+  
+  &copy; 2017 - 2021 &#183;
+  <a href="/"> 记事本 </a> &#183;
+  Theme <a href="https://github.com/RainerChiang/simpleness">Simpleness</a> Powered by <a href="https://gohugo.io/">Hugo</a> &#183;
+  <a href="#"><i class="fas fa-chevron-up"></i></a>
+</div>
+</body>
+  <script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({container: document.getElementById('article')});
+</script>
+
+
+
+
+</html>

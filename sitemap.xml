@@ -2,34 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://linshaoyong.github.io/tags/devops/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/posts/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/tags/saltstack/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/saltstack-best-practices/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/tags/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
     <loc>https://linshaoyong.github.io/about/</loc>
     <lastmod>2021-06-17T12:27:58+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/tags/ansible/</loc>
     <lastmod>2021-06-17T08:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-4/</loc>
+    <loc>https://linshaoyong.github.io/ansible-inventory/</loc>
     <lastmod>2021-06-17T08:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/devops/</loc>
-    <lastmod>2021-06-17T08:02:50+00:00</lastmod>
-  </url><url>
-    <loc>https://linshaoyong.github.io/posts/</loc>
-    <lastmod>2021-06-17T08:02:50+00:00</lastmod>
-  </url><url>
-    <loc>https://linshaoyong.github.io/tags/</loc>
-    <lastmod>2021-06-17T08:02:50+00:00</lastmod>
-  </url><url>
-    <loc>https://linshaoyong.github.io/</loc>
-    <lastmod>2021-06-17T08:02:50+00:00</lastmod>
-  </url><url>
-    <loc>https://linshaoyong.github.io/ansible-3/</loc>
+    <loc>https://linshaoyong.github.io/ansible-role/</loc>
     <lastmod>2021-06-17T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-2/</loc>
+    <loc>https://linshaoyong.github.io/ansible-playbook/</loc>
     <lastmod>2021-06-16T16:50:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-1/</loc>
+    <loc>https://linshaoyong.github.io/ansible-start/</loc>
     <lastmod>2021-06-16T09:45:50+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/tags/algorithm/</loc>
