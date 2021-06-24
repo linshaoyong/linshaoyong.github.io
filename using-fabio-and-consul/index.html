@@ -106,10 +106,10 @@ user --&gt; fabio （192.168.0.10:10000） --+--&gt; nginx （192.168.0.12:10001
 <p>fabio需要配置的项很少，如果要改变默认端口（比如1000），</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./fabio -proxy.addr<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;:10000&#39;</span>
 </code></pre></div><p>也可以使用配置文件，创建fabio.properties，自定义一些配置项，比如端口、日志级别，</p>
-<pre><code class="language-properties" data-lang="properties">proxy.addr = :10000
-log.access.target = stdout
-log.level  = TRACE
-</code></pre><p>运行时指定配置文件，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">proxy.addr = :10000</span>
+<span style="color:#ae81ff">log.access.target = stdout</span>
+<span style="color:#ae81ff">log.level  = TRACE</span>
+</code></pre></div><p>运行时指定配置文件，</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./fabio -cfg fabio.properties
 </code></pre></div><h2 id="consul配置">consul配置</h2>
 <p>在consul配置我们提供的服务，并提供健康检测脚本，</p>
