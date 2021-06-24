@@ -76,7 +76,7 @@ if (!doNotTrack) {
       
         6 min
       
-      19 s
+      16 s
       &nbsp;
     
     
@@ -102,7 +102,7 @@ user --&gt; nginx （192.168.0.10:10000） --+--&gt; service-b （192.168.0.12:1
 user --&gt; fabio （192.168.0.10:10000） --+--&gt; nginx （192.168.0.12:10001） --&gt; service-b
                                         | 
                                         +--&gt; nginx （192.168.0.13:10001） --&gt; service-c
-</code></pre></div><h2 id="fabio配置">fabio配置</h2>
+</code></pre></div><h2 id="fabio-配置">fabio 配置</h2>
 <p>fabio需要配置的项很少，如果要改变默认端口（比如1000）</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./fabio -proxy.addr<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;:10000&#39;</span>
 </code></pre></div><p>也可以使用配置文件，创建fabio.properties，自定义一些配置项，比如端口、日志级别</p>
@@ -111,7 +111,7 @@ user --&gt; fabio （192.168.0.10:10000） --+--&gt; nginx （192.168.0.12:10001
 <span style="color:#a6e22e">log.level</span>  <span style="color:#f92672">=</span> <span style="color:#e6db74">TRACE</span>
 </code></pre></div><p>运行时指定配置文件，</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./fabio -cfg fabio.properties
-</code></pre></div><h2 id="consul配置">consul配置</h2>
+</code></pre></div><h2 id="consul-配置">consul 配置</h2>
 <p>在consul配置我们提供的服务，并提供健康检测脚本，</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">    {
       <span style="color:#f92672">&#34;service&#34;</span>: {
@@ -131,7 +131,7 @@ user --&gt; fabio （192.168.0.10:10000） --+--&gt; nginx （192.168.0.12:10001
 </code></pre></div><p>检测脚本可以非常灵活，设备负载高、磁盘剩余空间不多、心情不好等等，都可以作为判断条件来决定服务状态。只要服务状态变更，fabio会自动从consul获取最新状态，并更新路由策略。fabio将不再转发请求给非passing的服务。
 其中tags是关键配置，fabio需要前缀为urlprefix-的tag来决定生成服务的映射地址。
 按照上面的配置，发送到http://192.168.0.10:10000/ 的请求，将转发给http://192.168.0.1[123]:10001/ 中的一台。</p>
-<h2 id="fabio路由">fabio路由</h2>
+<h2 id="fabio-路由">fabio 路由</h2>
 <p>可以访问http://192.168.0.10:9998/ 来查看当前的路由表，然后手工关闭、重启某些服务来观察路由表的变化。默认情况下，fabio根据consul获取的服务状态来更新路由，也可以手工指定路由规则，</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 删除到192.168.0.10的路由</span>
 $ route del blabla / http://192.168.0.10:10001/

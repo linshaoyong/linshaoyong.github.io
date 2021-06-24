@@ -181,10 +181,10 @@ $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bas
       <description>部署 fabio是一款简单、快速、几乎零配置的负载均衡软件，后端集成了consul等多种服务发现软件。
 假设我们有一个web应用，部署在3台设备，对外提供HTTP查询接口，一般是在前面用nginx做负载均衡。
 +--&amp;gt; service-a （192.168.0.11:10001） | user --&amp;gt; nginx （192.168.0.10:10000） --+--&amp;gt; service-b （192.168.0.12:10001） | +--&amp;gt; service-c （192.168.0.13:10001） 但是nginx对后端不够敏感，如果某台设备数据库变慢了、数据库的数据延迟等等，nginx依然会转发请求过去。 如果要做到质量高度敏感，不稳定的服务及时停止，就需要借助consul这类服务注册、服务发现和健康检测的工具。 当然，nginx功能很强大，要保留nginx的功能，可以在每个服务前端都部署nginx，再把fabio放在nginx之前。
-+--&amp;gt; nginx （192.168.0.11:10001） --&amp;gt; service-a | user --&amp;gt; fabio （192.168.0.10:10000） --+--&amp;gt; nginx （192.168.0.12:10001） --&amp;gt; service-b | +--&amp;gt; nginx （192.168.0.13:10001） --&amp;gt; service-c fabio配置 fabio需要配置的项很少，如果要改变默认端口（比如1000）
++--&amp;gt; nginx （192.168.0.11:10001） --&amp;gt; service-a | user --&amp;gt; fabio （192.168.0.10:10000） --+--&amp;gt; nginx （192.168.0.12:10001） --&amp;gt; service-b | +--&amp;gt; nginx （192.168.0.13:10001） --&amp;gt; service-c fabio 配置 fabio需要配置的项很少，如果要改变默认端口（比如1000）
 $ ./fabio -proxy.addr=&amp;#39;:10000&amp;#39; 也可以使用配置文件，创建fabio.properties，自定义一些配置项，比如端口、日志级别
 proxy.addr = :10000 log.access.target = stdout log.level = TRACE 运行时指定配置文件，
-$ ./fabio -cfg fabio.properties consul配置 在consul配置我们提供的服务，并提供健康检测脚本，
+$ ./fabio -cfg fabio.properties consul 配置 在consul配置我们提供的服务，并提供健康检测脚本，
 { &amp;#34;service&amp;#34;: { &amp;#34;id&amp;#34;: &amp;#34;blabla-host-a&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;blabla&amp;#34;, &amp;#34;port&amp;#34;: 10001, &amp;#34;tags&amp;#34;:[&amp;#34;urlprefix-/&amp;#34;], &amp;#34;checks&amp;#34;:[ { &amp;#34;script&amp;#34;: &amp;#34;/usr/local/blabla/check.</description>
     </item>
     
