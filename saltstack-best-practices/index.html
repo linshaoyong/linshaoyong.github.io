@@ -243,18 +243,18 @@ if (!doNotTrack) {
       - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">apache</span>
 </code></pre></div><p>进步了一些，但还存在一些问题，比如值都是静态写在 state，不能适配多平台安装。软件和配置写在同一个 state 里，不支持只需要安装软件并使用默认配置的场景。再次重构如下，</p>
 <p><code>/srv/salt/apache/map.jinja</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jinja" data-lang="jinja"><span style="color:#75715e">{%</span> <span style="color:#66d9ef">set</span> apache <span style="color:#f92672">=</span> salt<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;grains.filter_by&#39;</span><span style="color:#f92672">]({</span>
-    <span style="color:#e6db74">&#39;Debian&#39;</span><span style="color:#f92672">:</span> <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#39;server&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;apache2&#39;</span><span style="color:#f92672">,</span>
-        <span style="color:#e6db74">&#39;service&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;apache2&#39;</span><span style="color:#f92672">,</span>
-        <span style="color:#e6db74">&#39;conf&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/etc/apache2/apache.conf&#39;</span><span style="color:#f92672">,</span>
-    <span style="color:#f92672">},</span>
-    <span style="color:#e6db74">&#39;RedHat&#39;</span><span style="color:#f92672">:</span> <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#39;server&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;httpd&#39;</span><span style="color:#f92672">,</span>
-        <span style="color:#e6db74">&#39;service&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;httpd&#39;</span><span style="color:#f92672">,</span>
-        <span style="color:#e6db74">&#39;conf&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/etc/httpd/httpd.conf&#39;</span><span style="color:#f92672">,</span>
-    <span style="color:#f92672">},</span>
-<span style="color:#f92672">},</span> merge<span style="color:#f92672">=</span>salt<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;pillar.get&#39;</span><span style="color:#f92672">](</span><span style="color:#e6db74">&#39;apache:lookup&#39;</span><span style="color:#f92672">))</span> <span style="color:#75715e">%}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{<span style="color:#ae81ff">% set apache = salt[&#39;grains.filter_by&#39;]({</span>
+    <span style="color:#f92672">&#39;Debian&#39;</span>: {
+        <span style="color:#f92672">&#39;server&#39;</span>: <span style="color:#e6db74">&#39;apache2&#39;</span>,
+        <span style="color:#f92672">&#39;service&#39;</span>: <span style="color:#e6db74">&#39;apache2&#39;</span>,
+        <span style="color:#f92672">&#39;conf&#39;</span>: <span style="color:#e6db74">&#39;/etc/apache2/apache.conf&#39;</span>,
+    },
+    <span style="color:#f92672">&#39;RedHat&#39;</span>: {
+        <span style="color:#f92672">&#39;server&#39;</span>: <span style="color:#e6db74">&#39;httpd&#39;</span>,
+        <span style="color:#f92672">&#39;service&#39;</span>: <span style="color:#e6db74">&#39;httpd&#39;</span>,
+        <span style="color:#f92672">&#39;conf&#39;</span>: <span style="color:#e6db74">&#39;/etc/httpd/httpd.conf&#39;</span>,
+    },
+}, <span style="color:#ae81ff">merge=salt[&#39;pillar.get&#39;](&#39;apache:lookup&#39;)) %}</span>
 </code></pre></div><p><code>/srv/pillar/apache.sls</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apache</span>:
   <span style="color:#f92672">lookup</span>:
