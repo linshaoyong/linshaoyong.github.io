@@ -8,7 +8,7 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 28 Nov 2017 14:15:56 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/fabio/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>使用fabio和consul将负载均衡微服务化</title>
+      <title>使用 fabio 和 consul 将负载均衡微服务化</title>
       <link>https://linshaoyong.github.io/using-fabio-and-consul/</link>
       <pubDate>Tue, 28 Nov 2017 14:15:56 +0000</pubDate>
       
