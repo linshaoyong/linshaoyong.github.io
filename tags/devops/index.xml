@@ -23,7 +23,7 @@ base: &amp;#39;web*&amp;#39;: - mysql.</description>
     <item>
       <title>Ansible 学习笔记（四）</title>
       <link>https://linshaoyong.github.io/ansible-inventory/</link>
-      <pubDate>Thu, 17 Jun 2021 08:02:50 +0000</pubDate>
+      <pubDate>Sat, 19 Jun 2021 08:02:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/ansible-inventory/</guid>
       <description>如果设备少，可以把所有设备写在一个文件，像前面的 host.ini。但是如果设备很多，并且分散在多个节点，那么最好拆分成多个目录文件来管理。
@@ -37,7 +37,7 @@ $ ansible-playbook playbook-xxx.yml -i prod/xm/host.ini inventory 文件也可�
     <item>
       <title>Ansible 学习笔记（三）</title>
       <link>https://linshaoyong.github.io/ansible-role/</link>
-      <pubDate>Thu, 17 Jun 2021 00:02:50 +0000</pubDate>
+      <pubDate>Fri, 18 Jun 2021 00:02:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/ansible-role/</guid>
       <description>Ansible playbook 可以通过 import_playbook 的方式，在 playbook 中组合其他 playbook。
@@ -51,7 +51,7 @@ roles └── salt-master ├── defaults │ └── main.yml ├──
     <item>
       <title>Ansible 学习笔记（二）</title>
       <link>https://linshaoyong.github.io/ansible-playbook/</link>
-      <pubDate>Wed, 16 Jun 2021 16:50:50 +0000</pubDate>
+      <pubDate>Thu, 17 Jun 2021 16:50:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/ansible-playbook/</guid>
       <description>Ansible playbook 使用 YAML 格式，模版文件使用 jinja2，要完成功能强大的 playbook，需要对这两个格式比较熟悉。

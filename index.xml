@@ -21,18 +21,9 @@ base: &amp;#39;web*&amp;#39;: - mysql.</description>
     </item>
     
     <item>
-      <title>About</title>
-      <link>https://linshaoyong.github.io/about/</link>
-      <pubDate>Thu, 17 Jun 2021 12:27:58 +0000</pubDate>
-      
-      <guid>https://linshaoyong.github.io/about/</guid>
-      <description>关于 Nothing&amp;hellip;&amp;hellip;</description>
-    </item>
-    
-    <item>
       <title>Ansible 学习笔记（四）</title>
       <link>https://linshaoyong.github.io/ansible-inventory/</link>
-      <pubDate>Thu, 17 Jun 2021 08:02:50 +0000</pubDate>
+      <pubDate>Sat, 19 Jun 2021 08:02:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/ansible-inventory/</guid>
       <description>如果设备少，可以把所有设备写在一个文件，像前面的 host.ini。但是如果设备很多，并且分散在多个节点，那么最好拆分成多个目录文件来管理。
@@ -46,7 +37,7 @@ $ ansible-playbook playbook-xxx.yml -i prod/xm/host.ini inventory 文件也可�
     <item>
       <title>Ansible 学习笔记（三）</title>
       <link>https://linshaoyong.github.io/ansible-role/</link>
-      <pubDate>Thu, 17 Jun 2021 00:02:50 +0000</pubDate>
+      <pubDate>Fri, 18 Jun 2021 00:02:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/ansible-role/</guid>
       <description>Ansible playbook 可以通过 import_playbook 的方式，在 playbook 中组合其他 playbook。
@@ -60,13 +51,22 @@ roles └── salt-master ├── defaults │ └── main.yml ├──
     <item>
       <title>Ansible 学习笔记（二）</title>
       <link>https://linshaoyong.github.io/ansible-playbook/</link>
-      <pubDate>Wed, 16 Jun 2021 16:50:50 +0000</pubDate>
+      <pubDate>Thu, 17 Jun 2021 16:50:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/ansible-playbook/</guid>
       <description>Ansible playbook 使用 YAML 格式，模版文件使用 jinja2，要完成功能强大的 playbook，需要对这两个格式比较熟悉。
 我们写一个部署 salt-master 的 playbook，一共包含3个文件。
  saltstack.repo：官方下载的 saltstack yum repo 文件 master.j2： salt-master 配置文件，内容需要依赖变量设置，所以是 jinja2 格式 playbook-salt-master.yml：Ansible playbook 文件  ├── master.j2 ├── playbook-salt-master.yml └── saltstack.repo playbook-salt-master.yml 就是 yaml 格式的 playbook 文件，每个 task 做的事情都不复杂。每一个 name 之后的属性都是 Ansible 提供的模块，用到了 ansible.builtin.rpm_key/copy/yum/file/template/systemd。正是这些功能强大的模块支持，让我们可以完成各种复杂的操作。
 --- - hosts: example become: yes handlers: - name: restart salt-master systemd: name: salt-master state: restarted tasks: - name: Import key from url ansible.builtin.rpm_key: state: present key: https://repo.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://linshaoyong.github.io/about/</link>
+      <pubDate>Thu, 17 Jun 2021 12:27:58 +0000</pubDate>
+      
+      <guid>https://linshaoyong.github.io/about/</guid>
+      <description>关于 Nothing&amp;hellip;&amp;hellip;</description>
     </item>
     
     <item>
@@ -103,7 +103,7 @@ def binary_search(array, target): left = 0 right = len(array) - 1 while left &am
       <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/deno-source-4/</guid>
-      <description>Deno源码解读之deno_core（四） core/runtime.rs /// Internal state for JsRuntime which is stored in one of v8::Isolate&amp;#39;s /// embedder slots. pub(crate) struct JsRuntimeState { pub global_context: Option&amp;lt;v8::Global&amp;lt;v8::Context&amp;gt;&amp;gt;, pub(crate) op_state: Rc&amp;lt;RefCell&amp;lt;OpState&amp;gt;&amp;gt;, ...... } impl JsRuntime { /// Only constructor, configuration is done through `options`.  pub fn new(mut options: RuntimeOptions) -&amp;gt; Self { ...... isolate.set_slot(Rc::new(RefCell::new(JsRuntimeState { global_context: Some(global_context), op_state: Rc::new(RefCell::new(op_state)), ...... }))); ...... } } JsRuntimeState 的字段较多，我们聚焦在 op_state: Rc&amp;lt;RefCell&amp;gt; 上。创建 JsRuntime 时要同时创建一个 JsRuntimeState 并通过 isolate.</description>
+      <description>core/runtime.rs /// Internal state for JsRuntime which is stored in one of v8::Isolate&amp;#39;s /// embedder slots. pub(crate) struct JsRuntimeState { pub global_context: Option&amp;lt;v8::Global&amp;lt;v8::Context&amp;gt;&amp;gt;, pub(crate) op_state: Rc&amp;lt;RefCell&amp;lt;OpState&amp;gt;&amp;gt;, ...... } impl JsRuntime { /// Only constructor, configuration is done through `options`.  pub fn new(mut options: RuntimeOptions) -&amp;gt; Self { ...... isolate.set_slot(Rc::new(RefCell::new(JsRuntimeState { global_context: Some(global_context), op_state: Rc::new(RefCell::new(op_state)), ...... }))); ...... } } JsRuntimeState 的字段较多，我们聚焦在 op_state: Rc&amp;lt;RefCell&amp;gt; 上。创建 JsRuntime 时要同时创建一个 JsRuntimeState 并通过 isolate.set_slot 把状态跟 isolate 关联上。OpState 的定义在 core/ops.</description>
     </item>
     
     <item>
@@ -112,7 +112,7 @@ def binary_search(array, target): left = 0 right = len(array) - 1 while left &am
       <pubDate>Fri, 23 Apr 2021 22:12:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/deno-source-3/</guid>
-      <description>Deno源码解读之deno_core（三） 如果我们回顾下 hello world 那个例子，会看到 JsRuntime 提供了一个 register_op 函数，在 Rust 端注册的 op 可以在 JavaScript 调用。
+      <description>如果我们回顾下 hello world 那个例子，会看到 JsRuntime 提供了一个 register_op 函数，在 Rust 端注册的 op 可以在 JavaScript 调用。
 core/examples/hello_world.rs runtime.register_op( &amp;#34;op_print&amp;#34;, // The op_fn callback takes a state object OpState,  // a structured arg of type `T` and an optional ZeroCopyBuf,  // a mutable reference to a JavaScript ArrayBuffer  op_sync(|_state, msg: Option&amp;lt;String&amp;gt;, zero_copy| { let mut out = std::io::stdout(); // Write msg to stdout  if let Some(msg) = msg { out.</description>
     </item>
     
@@ -122,7 +122,7 @@ core/examples/hello_world.rs runtime.register_op( &amp;#34;op_print&amp;#34;, //
       <pubDate>Thu, 22 Apr 2021 22:12:50 +0000</pubDate>
       
       <guid>https://linshaoyong.github.io/deno-source-2/</guid>
-      <description>Deno源码解读之deno_core（二） 从 hello word 的例子中可以看到，deno_core 为我们封装了 JsRuntime ，理解 JsRuntime 背后原理，就基本上掌握了 deno_core。
+      <description>从 hello word 的例子中可以看到，deno_core 为我们封装了 JsRuntime ，理解 JsRuntime 背后原理，就基本上掌握了 deno_core。
 core/runtime.rs /// A single execution context of JavaScript. Corresponds roughly to the &amp;#34;Web /// Worker&amp;#34; concept in the DOM. A JsRuntime is a Future that can be used with /// an event loop (Tokio, async_std). pub struct JsRuntime { // This is an Option&amp;lt;OwnedIsolate&amp;gt; instead of just OwnedIsolate to workaround  // an safety issue with SnapshotCreator. See JsRuntime::drop.  v8_isolate: Option&amp;lt;v8::OwnedIsolate&amp;gt;, snapshot_creator: Option&amp;lt;v8::SnapshotCreator&amp;gt;, has_snapshotted: bool, allocations: IsolateAllocations, } /// Objects that need to live as long as the isolate #[derive(Default)] struct IsolateAllocations { near_heap_limit_callback_data: Option&amp;lt;(Box&amp;lt;RefCell&amp;lt;dyn Any&amp;gt;&amp;gt;, v8::NearHeapLimitCallback)&amp;gt;, } JsRuntime 主要包含两个字段，v8::OwnedIsolate 和 IsolateAllocations。v8::OwnedIsolate 来自rusty_v8，相当于 V8 isolate 实例，IsolateAllocations 保存生命周期不短于 isolate 的各种对象。</description>
     </item>
     

@@ -76,7 +76,7 @@ if (!doNotTrack) {
       
         4 min
       
-      46 s
+      41 s
       &nbsp;
     
     
@@ -86,8 +86,7 @@ if (!doNotTrack) {
   
 
   <div class="post-text">
-    <h2 id="deno源码解读之deno_core二">Deno源码解读之deno_core（二）</h2>
-<p>从 hello word 的例子中可以看到，deno_core 为我们封装了 JsRuntime ，理解 JsRuntime 背后原理，就基本上掌握了 deno_core。</p>
+    <p>从 hello word 的例子中可以看到，deno_core 为我们封装了 JsRuntime ，理解 JsRuntime 背后原理，就基本上掌握了 deno_core。</p>
 <h3 id="coreruntimers">core/runtime.rs</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#e6db74">/// A single execution context of JavaScript. Corresponds roughly to the &#34;Web
 </span><span style="color:#e6db74">/// Worker&#34; concept in the DOM. A JsRuntime is a Future that can be used with
