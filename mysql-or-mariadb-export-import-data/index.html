@@ -86,16 +86,16 @@ if (!doNotTrack) {
   <div class="post-text">
     <p>有时候需要用mysqldump来导数据，记录下省得查文档。</p>
 <h2 id="导出数据到sql文件">导出数据到sql文件</h2>
-<pre><code class="language-console" data-lang="console">$ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&quot;t&gt;a and t&lt;b&quot; &gt; data.sql
-</code></pre><h2 id="导出数据到压缩文件">导出数据到压缩文件</h2>
-<pre><code class="language-console" data-lang="console">$ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&quot;t&gt;a and t&lt;b&quot; | gzip &gt; data.sql.gz
-</code></pre><h2 id="后台运行导出数据">后台运行导出数据</h2>
-<pre><code class="language-console" data-lang="console">$ nohup sh -c 'mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&quot;t&gt;a and t&lt;b&quot; | gzip &gt; data.sql.gz' &amp;
-</code></pre><h2 id="后台运行导入数据">后台运行导入数据</h2>
-<pre><code class="language-console" data-lang="console">$ nohup sh -c 'gunzip &lt; data.sql.gz | mysql dbname' &amp;
-</code></pre><h2 id="导入数据时显示进度">导入数据时显示进度：</h2>
-<pre><code class="language-console" data-lang="console">$ pv data.sql.gz | gunzip | mysql dbname
-</code></pre><ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mysqldump --single-transaction --no-create-info --quick dbname tablename --where<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;t&gt;a and t&lt;b&#34;</span> &gt; data.sql
+</code></pre></div><h2 id="导出数据到压缩文件">导出数据到压缩文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mysqldump --single-transaction --no-create-info --quick dbname tablename --where<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;t&gt;a and t&lt;b&#34;</span> | gzip &gt; data.sql.gz
+</code></pre></div><h2 id="后台运行导出数据">后台运行导出数据</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ nohup sh -c <span style="color:#e6db74">&#39;mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&#34;t&gt;a and t&lt;b&#34; | gzip &gt; data.sql.gz&#39;</span> &amp;
+</code></pre></div><h2 id="后台运行导入数据">后台运行导入数据</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ nohup sh -c <span style="color:#e6db74">&#39;gunzip &lt; data.sql.gz | mysql dbname&#39;</span> &amp;
+</code></pre></div><h2 id="导入数据时显示进度">导入数据时显示进度：</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ pv data.sql.gz | gunzip | mysql dbname
+</code></pre></div><ul>
 <li>pv需要单独安装</li>
 <li>可以在用户目录下使用.my.cnf指定用户名、密码</li>
 </ul>

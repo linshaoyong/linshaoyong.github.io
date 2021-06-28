@@ -169,7 +169,7 @@ $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bas
       
       <guid>https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/</guid>
       <description>有时候需要用mysqldump来导数据，记录下省得查文档。
-导出数据到sql文件 $ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;quot;t&amp;gt;a and t&amp;lt;b&amp;quot; &amp;gt; data.sql 导出数据到压缩文件 $ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;quot;t&amp;gt;a and t&amp;lt;b&amp;quot; | gzip &amp;gt; data.sql.gz 后台运行导出数据 $ nohup sh -c &#39;mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;quot;t&amp;gt;a and t&amp;lt;b&amp;quot; | gzip &amp;gt; data.sql.gz&#39; &amp;amp; 后台运行导入数据 $ nohup sh -c &#39;gunzip &amp;lt; data.sql.gz | mysql dbname&#39; &amp;amp; 导入数据时显示进度： $ pv data.sql.gz | gunzip | mysql dbname  pv需要单独安装 可以在用户目录下使用.</description>
+导出数据到sql文件 $ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;#34;t&amp;gt;a and t&amp;lt;b&amp;#34; &amp;gt; data.sql 导出数据到压缩文件 $ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;#34;t&amp;gt;a and t&amp;lt;b&amp;#34; | gzip &amp;gt; data.sql.gz 后台运行导出数据 $ nohup sh -c &amp;#39;mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;#34;t&amp;gt;a and t&amp;lt;b&amp;#34; | gzip &amp;gt; data.sql.gz&amp;#39; &amp;amp; 后台运行导入数据 $ nohup sh -c &amp;#39;gunzip &amp;lt; data.sql.gz | mysql dbname&amp;#39; &amp;amp; 导入数据时显示进度： $ pv data.sql.gz | gunzip | mysql dbname  pv需要单独安装 可以在用户目录下使用.</description>
     </item>
     
     <item>
