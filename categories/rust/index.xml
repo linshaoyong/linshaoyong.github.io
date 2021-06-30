@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Deno on 记事本</title>
-    <link>https://linshaoyong.github.io/tags/deno/</link>
-    <description>Recent content in Deno on 记事本</description>
+    <title>Rust on 记事本</title>
+    <link>https://linshaoyong.github.io/categories/rust/</link>
+    <description>Recent content in Rust on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Apr 2021 22:12:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/deno/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 Apr 2021 22:12:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/categories/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Deno 源码解读之 deno_core（四）</title>
       <link>https://linshaoyong.github.io/deno-source-4/</link>

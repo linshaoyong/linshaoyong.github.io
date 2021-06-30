@@ -1,51 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>javascript on 记事本</title>
+    <title>JavaScript on 记事本</title>
     <link>https://linshaoyong.github.io/tags/javascript/</link>
-    <description>Recent content in javascript on 记事本</description>
+    <description>Recent content in JavaScript on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Apr 2021 22:12:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Mar 2021 22:12:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Deno 源码解读之 deno_core（四）</title>
-      <link>https://linshaoyong.github.io/deno-source-4/</link>
-      <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
+      <title>Event loop 介绍（二）</title>
+      <link>https://linshaoyong.github.io/event-loop-02/</link>
+      <pubDate>Wed, 10 Mar 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/deno-source-4/</guid>
-      <description>core/runtime.rs /// Internal state for JsRuntime which is stored in one of v8::Isolate&amp;#39;s /// embedder slots. pub(crate) struct JsRuntimeState { pub global_context: Option&amp;lt;v8::Global&amp;lt;v8::Context&amp;gt;&amp;gt;, pub(crate) op_state: Rc&amp;lt;RefCell&amp;lt;OpState&amp;gt;&amp;gt;, ...... } impl JsRuntime { /// Only constructor, configuration is done through `options`.  pub fn new(mut options: RuntimeOptions) -&amp;gt; Self { ...... isolate.set_slot(Rc::new(RefCell::new(JsRuntimeState { global_context: Some(global_context), op_state: Rc::new(RefCell::new(op_state)), ...... }))); ...... } } JsRuntimeState 的字段较多，我们聚焦在 op_state: Rc&amp;lt;RefCell&amp;gt; 上。创建 JsRuntime 时要同时创建一个 JsRuntimeState 并通过 isolate.set_slot 把状态跟 isolate 关联上。OpState 的定义在 core/ops.</description>
+      <guid>https://linshaoyong.github.io/event-loop-02/</guid>
+      <description>event loop 通常联合Reactor设计模式一起使用。在 Node.js 中每个异步 IO 操作都对应一个 handler（也叫回调函数/callback）。当 IO 操作触发事件，相应的回调函数进入执行队列，event loop 从队列中取出 callback 执行。event loop 是单线程的，所以 callback 要尽量轻量。
+Node.js Node.js 进程启动后，先初始化 event loop，再执行 JavaScript 文件，之后通过 event loop 循环执行异步操作的 callbacks。Node.js 的 event loop 分为多个阶段（phase），如下图所示
+每个 phase 都有一个队列，存放该 phase 需要执行的 callbacks。每个 phase 的说明可以参考Node.js 官方文档，解释得比较详细了。
+libuv libuv is a multi-platform support library with a focus on asynchronous I/O. It was primarily developed for use by Node.js, but it’s also used by Luvit, Julia, pyuv, and others.</description>
     </item>
     
     <item>
-      <title>Deno 源码解读之 deno_core（三）</title>
-      <link>https://linshaoyong.github.io/deno-source-3/</link>
-      <pubDate>Fri, 23 Apr 2021 22:12:50 +0000</pubDate>
+      <title>Event loop 介绍（一）</title>
+      <link>https://linshaoyong.github.io/event-loop-01/</link>
+      <pubDate>Tue, 09 Mar 2021 21:15:56 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/deno-source-3/</guid>
-      <description>如果我们回顾下 hello world 那个例子，会看到 JsRuntime 提供了一个 register_op 函数，在 Rust 端注册的 op 可以在 JavaScript 调用。
-core/examples/hello_world.rs runtime.register_op( &amp;#34;op_print&amp;#34;, // The op_fn callback takes a state object OpState,  // a structured arg of type `T` and an optional ZeroCopyBuf,  // a mutable reference to a JavaScript ArrayBuffer  op_sync(|_state, msg: Option&amp;lt;String&amp;gt;, zero_copy| { let mut out = std::io::stdout(); // Write msg to stdout  if let Some(msg) = msg { out.</description>
-    </item>
-    
-    <item>
-      <title>Deno 源码解读之 deno_core（二）</title>
-      <link>https://linshaoyong.github.io/deno-source-2/</link>
-      <pubDate>Thu, 22 Apr 2021 22:12:50 +0000</pubDate>
-      
-      <guid>https://linshaoyong.github.io/deno-source-2/</guid>
-      <description>从 hello word 的例子中可以看到，deno_core 为我们封装了 JsRuntime ，理解 JsRuntime 背后原理，就基本上掌握了 deno_core。
-core/runtime.rs /// A single execution context of JavaScript. Corresponds roughly to the &amp;#34;Web /// Worker&amp;#34; concept in the DOM. A JsRuntime is a Future that can be used with /// an event loop (Tokio, async_std). pub struct JsRuntime { // This is an Option&amp;lt;OwnedIsolate&amp;gt; instead of just OwnedIsolate to workaround  // an safety issue with SnapshotCreator. See JsRuntime::drop.  v8_isolate: Option&amp;lt;v8::OwnedIsolate&amp;gt;, snapshot_creator: Option&amp;lt;v8::SnapshotCreator&amp;gt;, has_snapshotted: bool, allocations: IsolateAllocations, } /// Objects that need to live as long as the isolate #[derive(Default)] struct IsolateAllocations { near_heap_limit_callback_data: Option&amp;lt;(Box&amp;lt;RefCell&amp;lt;dyn Any&amp;gt;&amp;gt;, v8::NearHeapLimitCallback)&amp;gt;, } JsRuntime 主要包含两个字段，v8::OwnedIsolate 和 IsolateAllocations。v8::OwnedIsolate 来自rusty_v8，相当于 V8 isolate 实例，IsolateAllocations 保存生命周期不短于 isolate 的各种对象。</description>
-    </item>
-    
-    <item>
-      <title>Deno 源码解读之 deno_core（一）</title>
-      <link>https://linshaoyong.github.io/deno-source-1/</link>
-      <pubDate>Wed, 21 Apr 2021 22:12:50 +0000</pubDate>
-      
-      <guid>https://linshaoyong.github.io/deno-source-1/</guid>
-      <description>首先，下载源代码
-git clone git@github.com:denoland/deno.git 然后，进入 deno 目录，看下主要的目录结构
-. ├── core ├── runtime ├── op_crates ├── cli ├── serde_v8 ├── test_plugin ├── test_util ├── third_party ├── tools ├── Cargo.lock └── Cargo.toml 主要目录共4个，cli/core/runtime/op_crates，最底层的是 core 目录，我们可以先集中研究该目录下的代码。core 目录包含 Cargo.toml 文件，是一个名为 deno_core 的 Crate。
-[package] name = &amp;#34;deno_core&amp;#34; version = &amp;#34;0.83.0&amp;#34; edition = &amp;#34;2018&amp;#34; description = &amp;#34;A secure JavaScript/TypeScript runtime built with V8, Rust, and Tokio&amp;#34; authors = [&amp;#34;the Deno authors&amp;#34;] license = &amp;#34;MIT&amp;#34; readme = &amp;#34;README.</description>
+      <guid>https://linshaoyong.github.io/event-loop-01/</guid>
+      <description>Event loop Event loop是异步编程的基础，Node.js通过Event loop实现了高性能非阻塞IO操作。了解Event loop，有助于了解程序背后的运行机制。本系列文章是我的学习总结，期间参考了一些很棒的资料，强烈推荐阅读。
+参考资料  What the heck is the event loop anyway? Event Loop and the Big Picture — NodeJS Event Loop Node.js Design Patterns event-loop-timers-and-nexttick  准备工具 Node.js Node.js® is a JavaScript runtime built on Chrome&amp;rsquo;s V8 JavaScript engine.
+为了方便使用多版本Node.js，可以用 nvm安装node。
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash $ nvm install node V8 V8 is Google’s open source high-performance JavaScript and WebAssembly engine, written in C++. It is used in Chrome and in Node.</description>
     </item>
     
   </channel>

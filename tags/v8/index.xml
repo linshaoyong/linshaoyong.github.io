@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>v8 on 记事本</title>
+    <title>V8 on 记事本</title>
     <link>https://linshaoyong.github.io/tags/v8/</link>
-    <description>Recent content in v8 on 记事本</description>
+    <description>Recent content in V8 on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 24 Apr 2021 22:12:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/v8/index.xml" rel="self" type="application/rss+xml" />

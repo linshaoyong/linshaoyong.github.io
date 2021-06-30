@@ -2,7 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://linshaoyong.github.io/categories/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
     <loc>https://linshaoyong.github.io/tags/devops/</loc>
+    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/categories/devops/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/posts/</loc>
@@ -41,6 +47,9 @@
     <loc>https://linshaoyong.github.io/tags/algorithm/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
+    <loc>https://linshaoyong.github.io/categories/algorithm/</loc>
+    <lastmod>2021-05-22T16:00:50+00:00</lastmod>
+  </url><url>
     <loc>https://linshaoyong.github.io/tags/binary-search/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
@@ -56,10 +65,13 @@
     <loc>https://linshaoyong.github.io/deno-source-4/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/javascript/</loc>
+    <loc>https://linshaoyong.github.io/tags/javassript/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/tags/rust/</loc>
+    <lastmod>2021-04-24T22:12:50+00:00</lastmod>
+  </url><url>
+    <loc>https://linshaoyong.github.io/categories/rust/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/tags/v8/</loc>
@@ -74,13 +86,10 @@
     <loc>https://linshaoyong.github.io/deno-source-1/</loc>
     <lastmod>2021-04-21T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/event-loop/</loc>
-    <lastmod>2021-03-10T22:12:50+00:00</lastmod>
-  </url><url>
     <loc>https://linshaoyong.github.io/event-loop-02/</loc>
     <lastmod>2021-03-10T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/node.js/</loc>
+    <loc>https://linshaoyong.github.io/tags/javascript/</loc>
     <lastmod>2021-03-10T22:12:50+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/event-loop-01/</loc>
@@ -98,15 +107,10 @@
     <loc>https://linshaoyong.github.io/tags/consul/</loc>
     <lastmod>2017-11-28T14:15:56+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/fabio/</loc>
+    <loc>https://linshaoyong.github.io/tags/microservice/</loc>
     <lastmod>2017-11-28T14:15:56+00:00</lastmod>
   </url><url>
     <loc>https://linshaoyong.github.io/using-fabio-and-consul/</loc>
     <lastmod>2017-11-28T14:15:56+00:00</lastmod>
-  </url><url>
-    <loc>https://linshaoyong.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2017-11-28T14:15:56+00:00</lastmod>
-  </url><url>
-    <loc>https://linshaoyong.github.io/categories/</loc>
   </url>
 </urlset>
