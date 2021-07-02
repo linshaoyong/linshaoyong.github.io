@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>JavaScript on 记事本</title>
-    <link>https://linshaoyong.github.io/tags/javascript/</link>
+    <link>/tags/javascript/</link>
     <description>Recent content in JavaScript on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Mar 2021 22:12:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Mar 2021 22:12:50 +0000</lastBuildDate><atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Event loop 介绍（二）</title>
-      <link>https://linshaoyong.github.io/event-loop-02/</link>
+      <link>/event-loop-02/</link>
       <pubDate>Wed, 10 Mar 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/event-loop-02/</guid>
+      <guid>/event-loop-02/</guid>
       <description>event loop 通常联合Reactor设计模式一起使用。在 Node.js 中每个异步 IO 操作都对应一个 handler（也叫回调函数/callback）。当 IO 操作触发事件，相应的回调函数进入执行队列，event loop 从队列中取出 callback 执行。event loop 是单线程的，所以 callback 要尽量轻量。
 Node.js Node.js 进程启动后，先初始化 event loop，再执行 JavaScript 文件，之后通过 event loop 循环执行异步操作的 callbacks。Node.js 的 event loop 分为多个阶段（phase），如下图所示
 每个 phase 都有一个队列，存放该 phase 需要执行的 callbacks。每个 phase 的说明可以参考Node.js 官方文档，解释得比较详细了。
@@ -21,10 +21,10 @@ libuv libuv is a multi-platform support library with a focus on asynchronous I/O
     
     <item>
       <title>Event loop 介绍（一）</title>
-      <link>https://linshaoyong.github.io/event-loop-01/</link>
+      <link>/event-loop-01/</link>
       <pubDate>Tue, 09 Mar 2021 21:15:56 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/event-loop-01/</guid>
+      <guid>/event-loop-01/</guid>
       <description>Event loop Event loop是异步编程的基础，Node.js通过Event loop实现了高性能非阻塞IO操作。了解Event loop，有助于了解程序背后的运行机制。本系列文章是我的学习总结，期间参考了一些很棒的资料，强烈推荐阅读。
 参考资料  What the heck is the event loop anyway? Event Loop and the Big Picture — NodeJS Event Loop Node.js Design Patterns event-loop-timers-and-nexttick  准备工具 Node.js Node.js® is a JavaScript runtime built on Chrome&amp;rsquo;s V8 JavaScript engine.
 为了方便使用多版本Node.js，可以用 nvm安装node。

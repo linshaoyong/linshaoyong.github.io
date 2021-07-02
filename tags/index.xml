@@ -2,143 +2,143 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 记事本</title>
-    <link>https://linshaoyong.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Jun 2021 00:02:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Jun 2021 00:02:50 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DevOps</title>
-      <link>https://linshaoyong.github.io/tags/devops/</link>
+      <link>/tags/devops/</link>
       <pubDate>Thu, 24 Jun 2021 00:02:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/devops/</guid>
+      <guid>/tags/devops/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SaltStack</title>
-      <link>https://linshaoyong.github.io/tags/saltstack/</link>
+      <link>/tags/saltstack/</link>
       <pubDate>Thu, 24 Jun 2021 00:02:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/saltstack/</guid>
+      <guid>/tags/saltstack/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ansible</title>
-      <link>https://linshaoyong.github.io/tags/ansible/</link>
+      <link>/tags/ansible/</link>
       <pubDate>Sat, 19 Jun 2021 08:02:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/ansible/</guid>
+      <guid>/tags/ansible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Algorithm</title>
-      <link>https://linshaoyong.github.io/tags/algorithm/</link>
+      <link>/tags/algorithm/</link>
       <pubDate>Sat, 22 May 2021 16:00:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/algorithm/</guid>
+      <guid>/tags/algorithm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Binary Search</title>
-      <link>https://linshaoyong.github.io/tags/binary-search/</link>
+      <link>/tags/binary-search/</link>
       <pubDate>Sat, 22 May 2021 16:00:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/binary-search/</guid>
+      <guid>/tags/binary-search/</guid>
       <description></description>
     </item>
     
     <item>
       <title>LeetCode</title>
-      <link>https://linshaoyong.github.io/tags/leetcode/</link>
+      <link>/tags/leetcode/</link>
       <pubDate>Sat, 22 May 2021 16:00:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/leetcode/</guid>
+      <guid>/tags/leetcode/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Deno</title>
-      <link>https://linshaoyong.github.io/tags/deno/</link>
+      <link>/tags/deno/</link>
       <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/deno/</guid>
+      <guid>/tags/deno/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JavasSript</title>
-      <link>https://linshaoyong.github.io/tags/javassript/</link>
+      <link>/tags/javassript/</link>
       <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/javassript/</guid>
+      <guid>/tags/javassript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rust</title>
-      <link>https://linshaoyong.github.io/tags/rust/</link>
+      <link>/tags/rust/</link>
       <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/rust/</guid>
+      <guid>/tags/rust/</guid>
       <description></description>
     </item>
     
     <item>
       <title>V8</title>
-      <link>https://linshaoyong.github.io/tags/v8/</link>
+      <link>/tags/v8/</link>
       <pubDate>Sat, 24 Apr 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/v8/</guid>
+      <guid>/tags/v8/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JavaScript</title>
-      <link>https://linshaoyong.github.io/tags/javascript/</link>
+      <link>/tags/javascript/</link>
       <pubDate>Wed, 10 Mar 2021 22:12:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/javascript/</guid>
+      <guid>/tags/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MariaDB</title>
-      <link>https://linshaoyong.github.io/tags/mariadb/</link>
+      <link>/tags/mariadb/</link>
       <pubDate>Mon, 12 Feb 2018 21:50:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/mariadb/</guid>
+      <guid>/tags/mariadb/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MySQL</title>
-      <link>https://linshaoyong.github.io/tags/mysql/</link>
+      <link>/tags/mysql/</link>
       <pubDate>Mon, 12 Feb 2018 21:50:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/mysql/</guid>
+      <guid>/tags/mysql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Consul</title>
-      <link>https://linshaoyong.github.io/tags/consul/</link>
+      <link>/tags/consul/</link>
       <pubDate>Tue, 28 Nov 2017 14:15:56 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/consul/</guid>
+      <guid>/tags/consul/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Microservice</title>
-      <link>https://linshaoyong.github.io/tags/microservice/</link>
+      <link>/tags/microservice/</link>
       <pubDate>Tue, 28 Nov 2017 14:15:56 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/tags/microservice/</guid>
+      <guid>/tags/microservice/</guid>
       <description></description>
     </item>
     

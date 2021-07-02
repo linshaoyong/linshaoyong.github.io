@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MariaDB on 记事本</title>
-    <link>https://linshaoyong.github.io/tags/mariadb/</link>
+    <link>/tags/mariadb/</link>
     <description>Recent content in MariaDB on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Feb 2018 21:50:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/mariadb/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Feb 2018 21:50:50 +0000</lastBuildDate><atom:link href="/tags/mariadb/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL&amp;MariaDB 数据导入导出小贴士</title>
-      <link>https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/</link>
+      <link>/mysql-or-mariadb-export-import-data/</link>
       <pubDate>Mon, 12 Feb 2018 21:50:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/</guid>
+      <guid>/mysql-or-mariadb-export-import-data/</guid>
       <description>有时候需要用mysqldump来导数据，记录下省得查文档。
 导出数据到sql文件 $ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;#34;t&amp;gt;a and t&amp;lt;b&amp;#34; &amp;gt; data.sql 导出数据到压缩文件 $ mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;#34;t&amp;gt;a and t&amp;lt;b&amp;#34; | gzip &amp;gt; data.sql.gz 后台运行导出数据 $ nohup sh -c &amp;#39;mysqldump --single-transaction --no-create-info --quick dbname tablename --where=&amp;#34;t&amp;gt;a and t&amp;lt;b&amp;#34; | gzip &amp;gt; data.sql.gz&amp;#39; &amp;amp; 后台运行导入数据 $ nohup sh -c &amp;#39;gunzip &amp;lt; data.sql.gz | mysql dbname&amp;#39; &amp;amp; 导入数据时显示进度： $ pv data.sql.gz | gunzip | mysql dbname  pv需要单独安装 可以在用户目录下使用.</description>
     </item>

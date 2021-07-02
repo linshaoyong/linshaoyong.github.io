@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>SaltStack on 记事本</title>
-    <link>https://linshaoyong.github.io/tags/saltstack/</link>
+    <link>/tags/saltstack/</link>
     <description>Recent content in SaltStack on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Jun 2021 00:02:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/saltstack/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Jun 2021 00:02:50 +0000</lastBuildDate><atom:link href="/tags/saltstack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SaltStack 最佳实践</title>
-      <link>https://linshaoyong.github.io/saltstack-best-practices/</link>
+      <link>/saltstack-best-practices/</link>
       <pubDate>Thu, 24 Jun 2021 00:02:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/saltstack-best-practices/</guid>
+      <guid>/saltstack-best-practices/</guid>
       <description>通用规则  应尽可能强调模块化和清晰性 在 pillars 和 states 之间建立明确的关系 在必要的时候使用变量，但不要过度使用它们 将敏感信息保存在 pillars 不要在 pillars top 文件中用 grains 匹配任何敏感的 pillars  遵循 fomulas 的方式构造 states Formulas 是 Salt 官方预先写好的 states，一个 Salt Formula 对应一个 Git 仓库。如果我们要直接使用，在 salt-master 加入相应配置
 gitfs_remotes: - https://github.com/saltstack-formulas/apache-formula - https://github.com/saltstack-formulas/memcached-formula 这样就可以使用 salt 提供的 formula 安装这两个软件了。
 我们看下 MySQL 这个 formula 的目录结构，

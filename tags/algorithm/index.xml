@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Algorithm on 记事本</title>
-    <link>https://linshaoyong.github.io/tags/algorithm/</link>
+    <link>/tags/algorithm/</link>
     <description>Recent content in Algorithm on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 May 2021 16:00:50 +0000</lastBuildDate><atom:link href="https://linshaoyong.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 May 2021 16:00:50 +0000</lastBuildDate><atom:link href="/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Binary Search 学习笔记</title>
-      <link>https://linshaoyong.github.io/binary-search/</link>
+      <link>/binary-search/</link>
       <pubDate>Sat, 22 May 2021 16:00:50 +0000</pubDate>
       
-      <guid>https://linshaoyong.github.io/binary-search/</guid>
+      <guid>/binary-search/</guid>
       <description>Binary Search 是一个比较常见的算法，理解起来还算简单，但是有时候实现不太容易。教科书上讲到 Binary Search 时，一般用有序数组查找元素为例子。
 def binary_search(array, target): left = 0 right = len(array) - 1 while left &amp;lt;= right: mid = left + (right - left) // 2 if array[mid] == target: return mid elif array[mid] &amp;gt; target: right = mid - 1 else: left = mid + 1 return -1 LeetCode 上有挺多 Binary Search 的题目，其中 Hard 难度也不少，难点往往在于如何判断出可以用 Binary Search 来解决。
 以猜0到100以内的数为例，能用 Binary Search 求解的问题，一般有以下特点，

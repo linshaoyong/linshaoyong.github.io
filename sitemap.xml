@@ -2,115 +2,115 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://linshaoyong.github.io/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/devops/</loc>
+    <loc>/tags/devops/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/categories/devops/</loc>
+    <loc>/categories/devops/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/saltstack/</loc>
+    <loc>/tags/saltstack/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/saltstack-best-practices/</loc>
+    <loc>/saltstack-best-practices/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/ansible/</loc>
+    <loc>/tags/ansible/</loc>
     <lastmod>2021-06-19T08:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-inventory/</loc>
+    <loc>/ansible-inventory/</loc>
     <lastmod>2021-06-19T08:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-role/</loc>
+    <loc>/ansible-role/</loc>
     <lastmod>2021-06-18T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-playbook/</loc>
+    <loc>/ansible-playbook/</loc>
     <lastmod>2021-06-17T16:50:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2021-06-17T12:27:58+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/ansible-start/</loc>
+    <loc>/ansible-start/</loc>
     <lastmod>2021-06-16T09:45:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/algorithm/</loc>
+    <loc>/tags/algorithm/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/categories/algorithm/</loc>
+    <loc>/categories/algorithm/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/binary-search/</loc>
+    <loc>/tags/binary-search/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/binary-search/</loc>
+    <loc>/binary-search/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/leetcode/</loc>
+    <loc>/tags/leetcode/</loc>
     <lastmod>2021-05-22T16:00:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/deno/</loc>
+    <loc>/tags/deno/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/deno-source-4/</loc>
+    <loc>/deno-source-4/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/javassript/</loc>
+    <loc>/tags/javassript/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/rust/</loc>
+    <loc>/tags/rust/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/categories/rust/</loc>
+    <loc>/categories/rust/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/v8/</loc>
+    <loc>/tags/v8/</loc>
     <lastmod>2021-04-24T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/deno-source-3/</loc>
+    <loc>/deno-source-3/</loc>
     <lastmod>2021-04-23T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/deno-source-2/</loc>
+    <loc>/deno-source-2/</loc>
     <lastmod>2021-04-22T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/deno-source-1/</loc>
+    <loc>/deno-source-1/</loc>
     <lastmod>2021-04-21T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/event-loop-02/</loc>
+    <loc>/event-loop-02/</loc>
     <lastmod>2021-03-10T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/javascript/</loc>
+    <loc>/tags/javascript/</loc>
     <lastmod>2021-03-10T22:12:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/event-loop-01/</loc>
+    <loc>/event-loop-01/</loc>
     <lastmod>2021-03-09T21:15:56+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/mariadb/</loc>
+    <loc>/tags/mariadb/</loc>
     <lastmod>2018-02-12T21:50:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/mysql/</loc>
+    <loc>/tags/mysql/</loc>
     <lastmod>2018-02-12T21:50:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/mysql-or-mariadb-export-import-data/</loc>
+    <loc>/mysql-or-mariadb-export-import-data/</loc>
     <lastmod>2018-02-12T21:50:50+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/consul/</loc>
+    <loc>/tags/consul/</loc>
     <lastmod>2017-11-28T14:15:56+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/tags/microservice/</loc>
+    <loc>/tags/microservice/</loc>
     <lastmod>2017-11-28T14:15:56+00:00</lastmod>
   </url><url>
-    <loc>https://linshaoyong.github.io/using-fabio-and-consul/</loc>
+    <loc>/using-fabio-and-consul/</loc>
     <lastmod>2017-11-28T14:15:56+00:00</lastmod>
   </url>
 </urlset>
