@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on 记事本</title>
+    <link>/tags/hugo/</link>
+    <description>Recent content in Hugo on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 05 Jul 2021 09:02:50 +0000</lastBuildDate><atom:link href="/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 Hugo 创建静态网站</title>
+      <link>/hugo-usage/</link>
+      <pubDate>Mon, 05 Jul 2021 09:02:50 +0000</pubDate>
+      
+      <guid>/hugo-usage/</guid>
+      <description>起步 Hugo 是用 Golang 开发的世界上最流行的静态网站生成器之一，安装方便，速度超快。上手也很容易，几条命令就可以新建一个带漂亮主题的网站。本文从初级用户角度来介绍 Hugo，会用能部署就行，写写博客并不需要对 Hugo 有太多了解。如果要自定义模版等高级用法，可以参考官方网站。
+下面几条命令完成了安装、创建项目、添加第三方主题、创建一篇文章、本地启动服务。
+# 安装 $ brew install hugo # 创建新站点 $ hugo new site quickstart # 添加主题，以 Ananke theme 为例 $ cd quickstart $ git init $ git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke $ echo theme = \&amp;#34;ananke\&amp;#34; &amp;gt;&amp;gt; config.toml # 创建第一篇文章 $ hugo new posts/my-first-post.md # 本地启动服务 $ hugo server -D 目录 创建一个新站点，默认生成以下文件和目录
+. ├── archetypes │ └── default.md ├── config.toml ├── content ├── data ├── layouts ├── static └── themes  archetypes  使用 hugo new posts/my-first-post.</description>
+    </item>
+    
+  </channel>
+</rss>

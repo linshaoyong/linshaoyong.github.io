@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/tags/hugo/</loc>
+    <lastmod>2021-07-05T09:02:50+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2021-07-05T09:02:50+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2021-07-05T09:02:50+00:00</lastmod>
+  </url><url>
+    <loc>/hugo-usage/</loc>
+    <lastmod>2021-07-05T09:02:50+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2021-07-05T09:02:50+00:00</lastmod>
+  </url><url>
     <loc>/categories/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
@@ -11,19 +26,10 @@
     <loc>/categories/devops/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
-  </url><url>
     <loc>/tags/saltstack/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
     <loc>/saltstack-best-practices/</loc>
-    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2021-06-24T00:02:50+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
     <lastmod>2021-06-24T00:02:50+00:00</lastmod>
   </url><url>
     <loc>/tags/ansible/</loc>
