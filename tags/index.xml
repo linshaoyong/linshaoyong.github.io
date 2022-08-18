@@ -6,7 +6,25 @@
     <description>Recent content in Tags on 记事本</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jul 2021 09:02:50 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 10:20:50 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>frp</title>
+      <link>/tags/frp/</link>
+      <pubDate>Thu, 18 Aug 2022 10:20:50 +0000</pubDate>
+      
+      <guid>/tags/frp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reverse proxy</title>
+      <link>/tags/reverse-proxy/</link>
+      <pubDate>Thu, 18 Aug 2022 10:20:50 +0000</pubDate>
+      
+      <guid>/tags/reverse-proxy/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Hugo</title>
       <link>/tags/hugo/</link>

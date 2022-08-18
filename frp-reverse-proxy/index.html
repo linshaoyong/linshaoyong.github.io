@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Hugo 0.83.1" />
+  <title> 使用 frp 反向代理 https 网站 | 记事本 </title>
+  <link rel="stylesheet" href="/css/simpleness.css">
+  <link rel="canonical" href="/frp-reverse-proxy/">
+  <link rel="alternate" type="application/rss+xml" href="" title="记事本">
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-126399136-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body class="container">
+  <nav class="navigation">
+  <div class="nav-left">
+    
+    <div class="nav-item nav-title">
+      <a href="/"> 记事本</a>
+    </div>
+    <div class="nav-item nav-menu">
+      
+      <a href="/"> Home</a>
+      
+      <a href="/about/"> About</a>
+      
+    </div>
+  </div>
+  <div class="nav-item nav-right fontawesome">
+    
+    
+    <a href="https://github.com/linshaoyong" target="_blank">
+      <i title="GitHub" class="fab fa-github"></i>
+    </a>
+    
+    
+    <a href="/index.xml" target="_blank">
+      <i title="RSS" class="fas fa-rss"></i>
+    </a>
+    
+  </div>
+</nav>
+
+  
+<article class="post">
+  <header class="post-header">
+    <h1 style="text-align: center;" >使用 frp 反向代理 https 网站</h1>
+    <div class="post-metadata">
+    
+      <time datetime="2022-08-18T10:20:50Z">August 18, 2022</time> &nbsp; 
+    
+    
+    
+    
+    
+      <i class="far fa-clock"></i>
+      
+      
+      
+      
+        1 min
+      
+      54 s
+      &nbsp;
+    
+    
+    </div>
+  </header>
+
+  
+
+  <div class="post-text">
+    <p>家里一台苹果本，一台 <code>Ubuntu</code> 台式机，<code>Ubuntu</code> 上跑个虚拟机，运行 <code>Django</code> 程序。苹果本和台式机在同一个局域网，需要从苹果本访问台式机的虚拟机里的 Django 程序。</p>
+<p><img src="./images/frp.png" alt="frp"></p>
+<p>搜索后，发现 <a href="https://github.com/fatedier/frp">frp</a> 可以满足这个需求。根据官方介绍，frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。</p>
+<p>frp 分为两个程序， <code>frps</code> 运行在服务端，<code>frpc</code> 运行在客户端</p>
+<h3 id="frps-on-ubuntu">frps on Ubuntu</h3>
+<p>在 Ubuntu 上配置 <code>frps.ini</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">common</span>]
+<span style="color:#a6e22e">bind_port</span> = <span style="color:#ae81ff">7000</span>
+<span style="color:#a6e22e">vhost_http_port</span> = <span style="color:#ae81ff">8080</span>
+</code></pre></div><p>启动</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">frps -c frps.ini
+</code></pre></div><h3 id="frcp-on-ubuntu-vm">frcp on Ubuntu VM</h3>
+<p>在 Ubuntu VM 上配置 <code>frcp.ini</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">common</span>]
+<span style="color:#a6e22e">server_addr</span> = <span style="color:#ae81ff">192.168</span>.<span style="color:#ae81ff">1.20</span>
+<span style="color:#a6e22e">server_port</span> = <span style="color:#ae81ff">7000</span>
+
+[<span style="color:#a6e22e">django</span>]
+<span style="color:#a6e22e">type</span> = <span style="color:#a6e22e">http</span>
+<span style="color:#a6e22e">custom_domains</span> = <span style="color:#ae81ff">192.168</span>.<span style="color:#ae81ff">1.20</span>
+<span style="color:#a6e22e">plugin</span> = <span style="color:#a6e22e">http2https</span>
+<span style="color:#a6e22e">plugin_local_addr</span> = <span style="color:#ae81ff">192.168</span>.<span style="color:#ae81ff">2.30</span>
+<span style="color:#a6e22e">plugin_host_header_rewrite</span> = <span style="color:#ae81ff">192.168</span>.<span style="color:#ae81ff">2.30</span>
+<span style="color:#a6e22e">plugin_header_X</span><span style="color:#960050;background-color:#1e0010">-</span><span style="color:#a6e22e">From</span><span style="color:#960050;background-color:#1e0010">-</span><span style="color:#a6e22e">Where</span> = <span style="color:#a6e22e">frp</span>
+</code></pre></div><p>启动</p>
+<pre><code>frpc -c frpc.ini
+</code></pre><p>在 macbook 打开 chrome，访问 <code>http://192.168.1.20:8080</code></p>
+<h4 id="问题">问题</h4>
+<ol>
+<li>Origin checking failed - http://192.168.1.20:8080 does not match any trusted origins.</li>
+</ol>
+<p>在 django 程序的 settings.py 设置</p>
+<pre><code>CSRF_TRUSTED_ORIGINS = ['http://192.168.1.20:8080']
+</code></pre><ol>
+<li>CSRF cookie not set</li>
+</ol>
+<p>通过 curl 查看 reponse header 的 Set-Cookie 部分，<code>curl -IL http://192.168.1.20:8080</code></p>
+<blockquote>
+<p>Set-Cookie: csrftoken=xxxtoken; expires=Thu, 17 Aug 2023 14:27:11 GMT; Max-Age=31449600; Path=/; SameSite=Lax; Secure</p>
+</blockquote>
+<p>或者用 chrome dev tools 查看</p>
+<blockquote>
+<p>This attempt to set a cookie via a <em>Set</em>-<em>Cookie was blocked because it had the &ldquo;Secure</em>&rdquo; <em>attribute</em> but was not received over a secure connection.</p>
+</blockquote>
+<p>提示得很清楚了，因为我们用的是 http 协议访问，所以浏览器不能保存 cookie。</p>
+<p>在 django 程序的 settings.py 设置</p>
+<pre><code>CSRF_COOKIE_SECURE = False
+</code></pre>
+  </div>
+
+  <footer class="post-footer">
+    
+
+    
+    <div class="post-tags">
+      <i class="fas fa-tags"></i>
+      
+        <a href="/tags/frp">frp</a>
+        &nbsp;
+      
+        <a href="/tags/reverse-proxy">reverse proxy</a>
+        &nbsp;
+      
+    </div>
+    
+
+    
+    
+  </footer>
+  
+  <div class="comments">
+  <div class="comments">
+
+
+
+</div>
+  </div>
+</article>
+
+  <div class="foot">
+  
+  &copy; 2017 - 2022 &#183;
+  <a href="/"> 记事本 </a> &#183;
+  Theme <a href="https://github.com/RainerChiang/simpleness">Simpleness</a> Powered by <a href="https://gohugo.io/">Hugo</a> &#183;
+  <a href="#"><i class="fas fa-chevron-up"></i></a>
+</div>
+</body>
+  <script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({container: document.getElementById('article')});
+</script>
+
+
+
+
+</html>

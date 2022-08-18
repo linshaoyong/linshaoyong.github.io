@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>frp on 记事本</title>
+    <link>/tags/frp/</link>
+    <description>Recent content in frp on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Aug 2022 10:20:50 +0000</lastBuildDate><atom:link href="/tags/frp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 frp 反向代理 https 网站</title>
+      <link>/frp-reverse-proxy/</link>
+      <pubDate>Thu, 18 Aug 2022 10:20:50 +0000</pubDate>
+      
+      <guid>/frp-reverse-proxy/</guid>
+      <description>家里一台苹果本，一台 Ubuntu 台式机，Ubuntu 上跑个虚拟机，运行 Django 程序。苹果本和台式机在同一个局域网，需要从苹果本访问台式机的虚拟机里的 Django 程序。
+搜索后，发现 frp 可以满足这个需求。根据官方介绍，frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
+frp 分为两个程序， frps 运行在服务端，frpc 运行在客户端
+frps on Ubuntu 在 Ubuntu 上配置 frps.ini
+[common] bind_port = 7000 vhost_http_port = 8080 启动
+frps -c frps.ini frcp on Ubuntu VM 在 Ubuntu VM 上配置 frcp.ini
+[common] server_addr = 192.168.1.20 server_port = 7000 [django] type = http custom_domains = 192.168.1.20 plugin = http2https plugin_local_addr = 192.168.2.30 plugin_host_header_rewrite = 192.</description>
+    </item>
+    
+  </channel>
+</rss>
