@@ -111,15 +111,15 @@ if (!doNotTrack) {
 <span style="color:#a6e22e">plugin_host_header_rewrite</span> = <span style="color:#ae81ff">192.168</span>.<span style="color:#ae81ff">2.30</span>
 <span style="color:#a6e22e">plugin_header_X</span><span style="color:#960050;background-color:#1e0010">-</span><span style="color:#a6e22e">From</span><span style="color:#960050;background-color:#1e0010">-</span><span style="color:#a6e22e">Where</span> = <span style="color:#a6e22e">frp</span>
 </code></pre></div><p>启动</p>
-<pre><code>frpc -c frpc.ini
-</code></pre><p>在 macbook 打开 chrome，访问 <code>http://192.168.1.20:8080</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">frpc -c frpc.ini
+</code></pre></div><p>在 macbook 打开 chrome，访问 <code>http://192.168.1.20:8080</code></p>
 <h4 id="问题">问题</h4>
 <ol>
 <li>Origin checking failed - http://192.168.1.20:8080 does not match any trusted origins.</li>
 </ol>
 <p>在 django 程序的 settings.py 设置</p>
-<pre><code>CSRF_TRUSTED_ORIGINS = ['http://192.168.1.20:8080']
-</code></pre><ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">CSRF_TRUSTED_ORIGINS <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;http://192.168.1.20:8080&#39;</span><span style="color:#f92672">]</span>
+</code></pre></div><ol start="2">
 <li>CSRF cookie not set</li>
 </ol>
 <p>通过 curl 查看 reponse header 的 Set-Cookie 部分，<code>curl -IL http://192.168.1.20:8080</code></p>
@@ -132,8 +132,8 @@ if (!doNotTrack) {
 </blockquote>
 <p>提示得很清楚了，因为我们用的是 http 协议访问，所以浏览器不能保存 cookie。</p>
 <p>在 django 程序的 settings.py 设置</p>
-<pre><code>CSRF_COOKIE_SECURE = False
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">CSRF_COOKIE_SECURE <span style="color:#f92672">=</span> False
+</code></pre></div>
   </div>
 
   <footer class="post-footer">
